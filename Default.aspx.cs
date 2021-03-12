@@ -12,7 +12,6 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Host.SystemWeb;
 using System.Security.Claims;
-using Microsoft.WindowsAzure.StorageClient;
 using Microsoft.Azure.Cosmos.Table;
 using Microsoft.Extensions.Configuration;
 using System.Security.Principal;
@@ -20,7 +19,7 @@ using System.Security.Principal;
 
 namespace Playdate
 {
-    public partial class Login : Page
+    public partial class _Default : Page
     {
         string redirectUri = System.Configuration.ConfigurationManager.AppSettings["RedirectUri"];
         protected bool newAcc = true;
@@ -47,6 +46,7 @@ namespace Playdate
                 if (retrievedResult.Any())
                 {
                     newAcc = false;
+                    Response.Redirect("Main.aspx");
                 }
             }
         }
@@ -63,17 +63,19 @@ namespace Playdate
 
         protected void Submit_Click(object sender, EventArgs e)
         {
-            //string email = ClaimsPrincipal.Current.FindFirst("http://schemas.xmlsoap.org/ws/2005/05/identity/claims/emailaddress").Value;
+            string email = ClaimsPrincipal.Current.FindFirst("http://schemas.xmlsoap.org/ws/2005/05/identity/claims/emailaddress").Value;
             string name = PetNameTextbox.Text;
             if (ComparePet(Format(email), Format(name)))
             {
                 AddToTable(Format(email), Format(name));
+                newAcc = false;
+                Response.Redirect("Profile.aspx");
             }
             else
             {
                 Error.Text = "ERROR: The account for this pet already exists. Please try again. <br>";
             }
-            newAcc = false;
+            
         }
 
         /*
@@ -151,16 +153,6 @@ namespace Playdate
 
             return true;
         }
-
-        /*private static IIdentity GetIdentity()
-        {
-            if (HttpContext.Current != null && HttpContext.Current.User != null)
-            {
-                return HttpContext.Current.User.Identity;
-            }
-
-            return ClaimsPrincipal.Current != null ? ClaimsPrincipal.Current.Identity : null;
-        }*/
 
         /* Format -- formats all input text to capitalize only the first letter of input string 
 

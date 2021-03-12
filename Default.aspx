@@ -1,4 +1,4 @@
-﻿<%@ Page Title="LOGIN" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="Login.aspx.cs" Inherits="Playdate.Login" %>
+﻿<%@ Page Title="LOGIN" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="Default.aspx.cs" Inherits="Playdate._Default" %>
 
 <asp:Content ID="BodyContent" ContentPlaceHolderID="MainContent" runat="server">
      <div class="body">
@@ -49,6 +49,4 @@
             <% } 
        } %>
        <asp:Label ID="Error" runat="server" Text=""></asp:Label>
-       <asp:Button ID="SignOut" runat="server" Text="Sign Out" OnClick="SignOut_Click" />
-
 </asp:Content>

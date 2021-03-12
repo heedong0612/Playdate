@@ -7,7 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Globalization;
 using System.Text.RegularExpressions;
-//using Microsoft.WindowsAzure.StorageClient;
+using Microsoft.WindowsAzure.StorageClient;
 using Microsoft.Owin.Security;
 using Microsoft.Owin.Security.Cookies;
 using Microsoft.Owin.Security.OpenIdConnect;
@@ -55,10 +55,8 @@ namespace Playdate
         {
             try
             {
-                ConnectToTable();
                 TableQuery userEntry = new TableQuery().Where(TableQuery.GenerateFilterCondition("PartitionKey", QueryComparisons.Equal, Format(getEmail())));
                 var retrievedResult = tableClient.ExecuteQuery(userEntry);
-                //string retVal = "";
                 return retrievedResult.ElementAt(0).RowKey;
             }
             catch (Exception ex)
@@ -70,7 +68,7 @@ namespace Playdate
 
         protected void Page_Load(object sender, EventArgs e)
         {
-
+            ConnectToTable();
             if (!Request.IsAuthenticated)
             {
                 Response.Redirect("Default.aspx");
@@ -84,6 +82,7 @@ namespace Playdate
                 {
                     NameTextBox.Text += name + "<br>";
                     Home.Visible = true;
+                    //Load_Profile(Format(email), Format(name));
                 }
                 else
                 {
@@ -101,7 +100,7 @@ namespace Playdate
             try
             {
                 ConnectToTable();
-                if ( //string.IsNullOrWhiteSpace(NameTextBox.Text) || 
+                if ( 
                     string.IsNullOrWhiteSpace(AnimalTextBox.Text) ||
                     string.IsNullOrWhiteSpace(AgeTextBox.Text) || string.IsNullOrWhiteSpace(CityTextBox.Text) ||
                     string.IsNullOrWhiteSpace(StateTextBox.Text))
@@ -132,12 +131,6 @@ namespace Playdate
                     return;
                 }
 
-                //if (!IsValidEmail(EmailTextBox.Text))
-                //{
-                //    Label2.Text += "ERROR: Please enter a valid email address. <br>";
-                //    return;
-                //}
-
                 if (!VerifyBio(BioTextBox.Text))
                 {
                     Label2.Text += "ERROR: Please enter 20 words or lower for Bio. <br>";
@@ -151,12 +144,6 @@ namespace Playdate
                 {
                     return;
                 }
-
-                //if (!ComparePet(Format(EmailTextBox.Text), Format(NameTextBox.Text)))
-                //{
-                //    Label2.Text = "ERROR: The account for this pet already exists. Please try again. <br>";
-                //    return;
-                //}
 
                 Pet p = new Pet(//Format(NameTextBox.Text), 
                     Format(getEmail()), Format(getPetName()), Format(AgeTextBox.Text), Format(AnimalTextBox.Text), Format(CityTextBox.Text), Format(StateTextBox.Text),
@@ -187,26 +174,6 @@ namespace Playdate
             return state.Length == 2 && states.IndexOf(state) > 0;
         }
 
-        // true = not a match; false = table contains account already
-        //private static bool ComparePet(string email, string name)
-        //{
-        //    System.Collections.Generic.IEnumerable<Pet> itemlist = null;
-
-        //    TableQuery<Pet> CustomerQuery = new TableQuery<Pet>().Where(TableQuery.CombineFilters(
-        //            TableQuery.GenerateFilterCondition("PartitionKey", QueryComparisons.Equal, email),
-        //            TableOperators.And,
-        //            TableQuery.GenerateFilterCondition("RowKey", QueryComparisons.Equal, name)));
-        //    itemlist = tableClient.ExecuteQuery(CustomerQuery);
-
-        //    //if (itemlist.Count() > 0)
-        //    //{
-        //    //    return false; //there shouldn't be 2 pets with same name and same email
-
-        //    //}
-
-        //    return true;
-        //}
-
         /* check if the bio has 20 or less words
          */
         private static bool VerifyBio(string bio)
@@ -214,35 +181,6 @@ namespace Playdate
             string[] text = bio.Split(new char[0], StringSplitOptions.RemoveEmptyEntries); //split line by whitespace
             return text.Length <= 20;
         }
-        //private bool IsValidEmail(string email)
-        //{
-        //    if (string.IsNullOrWhiteSpace(email))
-        //        return false;
-
-        //    try
-        //    {
-        //        // Normalize the domain
-        //        email = Regex.Replace(email, @"(@)(.+)$", DomainMapper,
-        //                              RegexOptions.None, TimeSpan.FromMilliseconds(200));
-
-        //        // Examines the domain part of the email and normalizes it.
-        //        string DomainMapper(Match match)
-        //        {
-        //            // Use IdnMapping class to convert Unicode domain names.
-        //            var idn = new IdnMapping();
-
-        //            // Pull out and process domain name (throws ArgumentException on invalid)
-        //            string domainName = idn.GetAscii(match.Groups[2].Value);
-
-        //            return match.Groups[1].Value + domainName;
-        //        }
-        //    }
-        //    catch (Exception e)
-        //    {
-        //        Label2.Text = "ERROR: " + e.Message;
-        //        return false;
-        //    }
-        //}
 
         /* ConnectToTable --  instantiate a CloudTableClient object to interact with Azure Table Service
         * precondition: credentials are set up in appsetting.json
@@ -263,6 +201,7 @@ namespace Playdate
                 Label2.Text = "ERROR: " + e.Message;
             }
         }
+
         /* Format -- formats all input text to capitalize only the first letter of input string 
 
          * postcondition: returns empty string if input is null or only whitespace
@@ -313,6 +252,15 @@ namespace Playdate
             {
                 Label2.Text = "ERROR: " + ex.Message;
             }
+
+        }
+
+        /*
+         * TODO: Load in the profile data from the database so that all the user's info is loaded for them already 
+         * when they want to edit
+         */
+        private void Load_Profile(string email, string name)
+        {
 
         }
 

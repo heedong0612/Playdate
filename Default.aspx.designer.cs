@@ -11,7 +11,7 @@ namespace Playdate
 {
 
 
-    public partial class Login
+    public partial class _Default
     {
 
         /// <summary>
@@ -76,14 +76,5 @@ namespace Playdate
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label Error;
-
-        /// <summary>
-        /// SignOut control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button SignOut;
     }
 }
