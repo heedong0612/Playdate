@@ -69,11 +69,11 @@ namespace Playdate
         protected void Page_Load(object sender, EventArgs e)
         {
             ConnectToTable();
-            if (!Request.IsAuthenticated)
-            {
-                Response.Redirect("Default.aspx");
-                return;
-            }
+            //if (!Request.IsAuthenticated)
+            //{
+            //    Response.Redirect("Default.aspx");
+            //    return;
+            //}
 
             try
             {

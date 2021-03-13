@@ -1,22 +1,23 @@
 ﻿<%@ Page Title="Profile" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="Profile.aspx.cs" Inherits="Playdate.Profile" %>
 
 <asp:Content ID="BodyContent" ContentPlaceHolderID="MainContent" runat="server">
-    <div class="body">
-        <h2>Profile Page</h2>
-        <script src="./script.js"></script>
+    <link rel="stylesheet" href="./style.css">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Raleway&display=swap" rel="stylesheet">
+    <%--<link rel='stylesheet' href='https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css'>--%>
+    
+    <script src='https://code.jquery.com/jquery-3.5.1.slim.min.js'></script>
+    <script src='https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js'></script>
+    <style>
+        article, aside, figure, footer, header, hgroup,
+        menu, nav, section {
+            display: block;
+        }
+    </style>
+    <script src="./script.js"></script>
+     <h2>Profile Page</h2>
+    <div class="body">       
 
-
-        <style>
-            article, aside, figure, footer, header, hgroup,
-            menu, nav, section {
-                display: block;
-            }
-        </style>
-
-        <link rel='stylesheet' href='https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css'>
-        <link rel="stylesheet" href="./style.css">
-        <link rel="preconnect" href="https://fonts.gstatic.com">
-        <link href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@300&display=swap" rel="stylesheet">
         <div class="container">
 
             <img class="LOGO" src="LOGO.png" runat="server" />
@@ -25,20 +26,18 @@
 
             <hr />
             <br />
-
-
             <br />
 
-
-           <asp:Label ID="NameTextBox" runat="server" Text="ACCOUNT NAME IS: "></asp:Label>
-           <%--  <asp:TextBox ID="NameTextBox" runat="server"></asp:TextBox>--%>
+            <div class="savebutton">
+                <asp:Label class="nametext" ID="NameTextBox" runat="server" Text="ACCOUNT NAME IS: "></asp:Label>
+            </div>
+            <%--  <asp:TextBox ID="NameTextBox" runat="server"></asp:TextBox>--%>
             <br />
             <br />
             <asp:Label ID="Age" runat="server" Text="Age:"></asp:Label>
             <asp:TextBox ID="AgeTextBox" runat="server"></asp:TextBox>
 
             <br />
-
             <br />
 
 
@@ -105,12 +104,11 @@
             <br />
 
             <img class="HomePic" src="HOME.png" runat="server" />
-            <asp:Button ID="Home" runat="server" Text="Back To Main" OnClick="Main_Click" />
+            <asp:Button class="signinbutton" ID="Home" runat="server" Text="Back To Main" OnClick="Main_Click" />
 
 
         </div>
         <!--end container-->
-        <script src='https://code.jquery.com/jquery-3.5.1.slim.min.js'></script>
-        <script src='https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js'></script>
+
     </div>
 </asp:Content>
