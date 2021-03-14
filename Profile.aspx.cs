@@ -7,7 +7,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Globalization;
 using System.Text.RegularExpressions;
-using Microsoft.WindowsAzure.StorageClient;
+//using Microsoft.WindowsAzure.StorageClient;
+using global::Microsoft.WindowsAzure.Storage;
 using Microsoft.Owin.Security;
 using Microsoft.Owin.Security.Cookies;
 using Microsoft.Owin.Security.OpenIdConnect;
@@ -18,7 +19,7 @@ using System.Security.Claims;
 
 namespace Playdate
 {
-  
+
     public partial class Profile : Page
     {
         //sets up the credentials without hard-coding into the cs file
@@ -74,15 +75,15 @@ namespace Playdate
                 Response.Redirect("Default.aspx");
                 return;
             }
-
             try
             {
                 string name = getPetName();
+
+
                 if (!string.IsNullOrWhiteSpace(name))
                 {
                     NameTextBox.Text += name + "<br>";
                     Home.Visible = true;
-                    //Load_Profile(Format(email), Format(name));
                 }
                 else
                 {
@@ -100,7 +101,7 @@ namespace Playdate
             try
             {
                 ConnectToTable();
-                if ( 
+                if (
                     string.IsNullOrWhiteSpace(AnimalTextBox.Text) ||
                     string.IsNullOrWhiteSpace(AgeTextBox.Text) || string.IsNullOrWhiteSpace(CityTextBox.Text) ||
                     string.IsNullOrWhiteSpace(StateTextBox.Text))
@@ -139,7 +140,7 @@ namespace Playdate
 
 
                 string picID = Format(getEmail()) + "+" + Format(getPetName()) + ".jpg"; //TO BE OBTAINED FROM AUTHENTICATION
-                                                       //Format(EmailTextBox.Text) + "+" + Format(NameTextBox.Text) + ".jpg";
+                                                                                         //Format(EmailTextBox.Text) + "+" + Format(NameTextBox.Text) + ".jpg";
                 if (!UploadPic(picID))
                 {
                     return;
@@ -203,7 +204,6 @@ namespace Playdate
         }
 
         /* Format -- formats all input text to capitalize only the first letter of input string 
-
          * postcondition: returns empty string if input is null or only whitespace
          */
         private static string Format(string s)
@@ -245,7 +245,7 @@ namespace Playdate
         {
             try
             {
-                Server.Transfer("About.aspx");
+                Server.Transfer("Main.aspx");
 
             }
             catch (Exception ex)
