@@ -3,13 +3,13 @@ Tinder for pets; A website for pet owners to arrange meet ups for their pets to 
 
 ## 3/13/2021
 
-**Added** Incorporated Azure SQL DB to save and query previous messages. Message page now can display old chats between the users. Inbox page now contains all the chat rooms that has been open.
+**Added** Incorporated Azure SQL DB to save and query previous messages. <br />Message page now can display old chats between the users. Inbox page now contains all the chat rooms that has been open.
 
 **Added** Logo and Fonts updated.
 
 ## 3/11/2021
 
-**Added** Inbox and Message pages. To be completed.
+**Added** Blank Inbox and Message pages. To be completed.
 
 ## 3/10/2021
 
