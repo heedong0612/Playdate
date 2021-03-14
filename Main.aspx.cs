@@ -75,15 +75,17 @@ namespace Playdate
             string name = getPetName(email);
             TableOperation retrieveOperation = TableOperation.Retrieve(Format(email), Format(name));
             DynamicTableEntity pet = (DynamicTableEntity) table.Execute(retrieveOperation).Result;
-            for (int i = 0; i < pet.Properties.Count; i++)
-            {
-                if(pet.Properties.ElementAt(i).Key == "PicID")
+            if(pet != null) {
+                for (int i = 0; i < pet.Properties.Count; i++)
                 {
-                    string profile_pic_id = pet.Properties.ElementAt(i).Value.StringValue.Trim();
-                    Profile_Image.ImageUrl = "https://playdate.blob.core.windows.net/profilepictures/" + profile_pic_id;
-                    break;
+                    if(pet.Properties.ElementAt(i).Key == "PicID")
+                    {
+                        string profile_pic_id = pet.Properties.ElementAt(i).Value.StringValue.Trim();
+                        Profile_Image.ImageUrl = "https://playdate.blob.core.windows.net/profilepictures/" + profile_pic_id;
+                        break;
+                    }
                 }
-            }
+            }            
 
             for (int i = 0; i < AnimalTypes.Count; i++)  {
                 CheckBoxList1.Items[i].Text = "&nbsp;" + AnimalTypes[i];
