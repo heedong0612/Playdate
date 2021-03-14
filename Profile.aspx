@@ -34,35 +34,40 @@
             <%--  <asp:TextBox ID="NameTextBox" runat="server"></asp:TextBox>--%>
             <br />
             <br />
-            <asp:Label ID="Age" runat="server" Text="Age:"></asp:Label>
-            <asp:TextBox ID="AgeTextBox" runat="server"></asp:TextBox>
 
-            <br />
-            <br />
+            <table>
+                <tr>
+                    <td><asp:Label ID="Age" runat="server" Text="Age:"></asp:Label></td>
+                    <td> <asp:TextBox ID="AgeTextBox" runat="server"></asp:TextBox></td>
+                </tr>
 
+                 <tr>
+                     <td>
+                         <asp:Label ID="Animal" runat="server" Text="Animal Type:"></asp:Label>
+                     </td>
+                     <td>
+                         <asp:TextBox ID="AnimalTextBox" runat="server"></asp:TextBox>
+                     </td>
+                 </tr>
+                <tr>
+                     <td>
+                         <asp:Label ID="City" runat="server" Text="City:"></asp:Label>
+                     </td>
+                     <td>
+                         <asp:TextBox ID="CityTextBox" runat="server"></asp:TextBox>
+                     </td>
+                 </tr>
+                <tr>
+                     <td>
+                          <asp:Label ID="State" runat="server" Text="State:"></asp:Label>
+                     </td>
+                     <td>
+                         <asp:TextBox ID="StateTextBox" runat="server"></asp:TextBox>
+                     </td>
+                 </tr>
+                
 
-            <asp:Label ID="Animal" runat="server" Text="Animal Type:"></asp:Label>
-            <asp:TextBox ID="AnimalTextBox" runat="server"></asp:TextBox>
-
-            <br />
-
-            <br />
-            <asp:Label ID="City" runat="server" Text="City:"></asp:Label>
-            <asp:TextBox ID="CityTextBox" runat="server"></asp:TextBox>
-
-            <br />
-
-            <br />
-            <asp:Label ID="State" runat="server" Text="State:"></asp:Label>
-            <asp:TextBox ID="StateTextBox" runat="server"></asp:TextBox>
-
-            <br />
-
-            <br />
-            <%--<asp:Label ID="Email" runat="server" Text="Email:"></asp:Label>
-            <asp:TextBox ID="EmailTextBox" runat="server"></asp:TextBox>--%>
-
-            <br />
+            </table>    
 
             <br />
             <asp:Label ID="Bio" runat="server" Text="Upload your Bio:"></asp:Label>

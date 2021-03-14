@@ -7,7 +7,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Globalization;
 using System.Text.RegularExpressions;
-using Microsoft.WindowsAzure.StorageClient;
+//using Microsoft.WindowsAzure.StorageClient;
+using global::Microsoft.WindowsAzure.Storage;
 using Microsoft.Owin.Security;
 using Microsoft.Owin.Security.Cookies;
 using Microsoft.Owin.Security.OpenIdConnect;
@@ -18,7 +19,7 @@ using System.Security.Claims;
 
 namespace Playdate
 {
-  
+
     public partial class Profile : Page
     {
         //sets up the credentials without hard-coding into the cs file
@@ -74,15 +75,28 @@ namespace Playdate
                 Response.Redirect("Default.aspx");
                 return;
             }
-
             try
             {
                 string name = getPetName();
+                
+
                 if (!string.IsNullOrWhiteSpace(name))
                 {
                     NameTextBox.Text += name + "<br>";
                     Home.Visible = true;
-                    //Load_Profile(Format(email), Format(name));
+                   // TableQuery<Pet> CustomerQuery = new TableQuery<Pet>().Where(
+                   //TableQuery.GenerateFilterCondition("PartitionKey", QueryComparisons.Equal, Format(getEmail())
+                   //));
+                   // var itemlist = tableClient.ExecuteQuery(CustomerQuery);
+                   // foreach (Pet res in itemlist)
+                   // {
+                   //     AgeTextBox.Text = res.Age;
+                   //     AnimalTextBox.Text = res.Animal;
+                   //     CityTextBox.Text = res.City;
+                   //     StateTextBox.Text = res.State;
+                   //     BioTextBox.Text = res.Bio;
+
+                   // }
                 }
                 else
                 {
@@ -100,7 +114,7 @@ namespace Playdate
             try
             {
                 ConnectToTable();
-                if ( 
+                if (
                     string.IsNullOrWhiteSpace(AnimalTextBox.Text) ||
                     string.IsNullOrWhiteSpace(AgeTextBox.Text) || string.IsNullOrWhiteSpace(CityTextBox.Text) ||
                     string.IsNullOrWhiteSpace(StateTextBox.Text))
@@ -139,7 +153,7 @@ namespace Playdate
 
 
                 string picID = Format(getEmail()) + "+" + Format(getPetName()) + ".jpg"; //TO BE OBTAINED FROM AUTHENTICATION
-                                                       //Format(EmailTextBox.Text) + "+" + Format(NameTextBox.Text) + ".jpg";
+                                                                                         //Format(EmailTextBox.Text) + "+" + Format(NameTextBox.Text) + ".jpg";
                 if (!UploadPic(picID))
                 {
                     return;
@@ -245,7 +259,7 @@ namespace Playdate
         {
             try
             {
-                Server.Transfer("About.aspx");
+                Server.Transfer("Main.aspx");
 
             }
             catch (Exception ex)

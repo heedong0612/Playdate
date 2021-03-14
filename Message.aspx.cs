@@ -30,7 +30,7 @@ namespace Playdate
         string senderEmail = "Heedong@uw.edu";
         string senderPetname = "Umu";
 
-        string receiverEmail = "Heedong@uw.edu"; // "Kaitcolbert@hotmail.com";// "Jessica.nguyen0107@gmail.com"; // "Kaitcolbert@hotmail.com";
+        string receiverEmail = "Kaitcolbert@hotmail.com";// "Jessica.nguyen0107@gmail.com"; // "Kaitcolbert@hotmail.com";
         string receiverPetname = "HamBoy"; // "Puppy"; 
 
         static IConfigurationRoot GetConfiguration()
@@ -93,14 +93,20 @@ namespace Playdate
 
                     if (message_sender == senderID)
                     {
-                        l.Text = "<br /><br />[" + senderPetname + "]: " + message_content + "&emsp;&emsp;" + message_timesent;
-                        l.CssClass = "right_align";
+                        //l.Text = "<br /><br />[" + senderPetname + "]: " + message_content + "&emsp;&emsp;" + message_timesent;
+                        //l.CssClass = "right_align";
+                        var pic = "https://playdate.blob.core.windows.net/profilepictures/" + senderEmail + "+" + senderPetname + ".jpg";
+                        MAINPANEL.InnerHtml += "<br /><div width=\"100%\" class = \"right_align\">[" + senderPetname + "]: " + message_content + "&emsp;&emsp;" + message_timesent + "<img class = \"chatlogo\" src=\"" + pic + "\" alt=\"Sender's Profile Pic\"></div>";
+
 
                     }
                     else
                     {
-                        l.Text = "<br /><br /> [" + receiverPetname + "]: " + message_content + "&emsp;&emsp;" + message_timesent;
-                        l.CssClass = "left_align";
+                        //l.Text = "<br /><br /> [" + receiverPetname + "]: " + message_content + "&emsp;&emsp;" + message_timesent;
+                        //l.CssClass = "left_align";
+                        var pic = "https://playdate.blob.core.windows.net/profilepictures/" + receiverEmail + "+" + receiverPetname + ".jpg"; ;
+                        MAINPANEL.InnerHtml += "<br /><div width=\"100%\" class = \"left_align\"><img class = \"chatlogo\" src=\"" + pic + "\" alt=\"Receiver's Profile Pic\">[" + receiverPetname + "]: " + message_content + "&emsp;&emsp;" + message_timesent + "</div>";
+
                     }
                     Debug.WriteLine("width: " + l.Width.ToString());
                     Debug.WriteLine(l.CssClass.ToString());
@@ -125,7 +131,7 @@ namespace Playdate
         }
         protected void Back_Click(object sender, EventArgs e)
         {
-            Response.Redirect("Message.aspx");
+            Response.Redirect("Inbox.aspx");
         }
 
         private int getPersonID(string Email, string Petname)
