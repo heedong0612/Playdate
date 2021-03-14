@@ -15,7 +15,9 @@ using System.Security.Claims;
 using Microsoft.Azure.Cosmos.Table;
 using Microsoft.Extensions.Configuration;
 using System.Security.Principal;
-
+using System.Data.SqlClient;
+using System.Data;
+using System.Diagnostics;
 
 namespace Playdate
 {
@@ -68,6 +70,7 @@ namespace Playdate
             if (ComparePet(Format(email), Format(name)))
             {
                 AddToTable(Format(email), Format(name));
+                savePersonToDB(Format(email), Format(name));
                 newAcc = false;
                 Response.Redirect("Profile.aspx");
             }
@@ -76,6 +79,39 @@ namespace Playdate
                 Error.Text = "ERROR: The account for this pet already exists. Please try again. <br>";
             }
             
+        }
+
+        private void savePersonToDB(string Email, string Petname)
+        {
+            try
+            {
+                SqlConnectionStringBuilder builder = new SqlConnectionStringBuilder();
+
+                builder.DataSource = config.GetValue<string>("PlaydateDB:DataSource");
+                builder.UserID = config.GetValue<string>("PlaydateDB:AdminID");
+                builder.Password = config.GetValue<string>("PlaydateDB:AdminPWD");
+                builder.InitialCatalog = config.GetValue<string>("PlaydateDB:Catalog");
+
+                SqlConnection connection = new SqlConnection(builder.ConnectionString);
+                String sqlQuery = "Insert into Person(Email, PetName) values(@Email, @PetName)";
+
+                connection.Open();
+                SqlCommand sql = new SqlCommand(sqlQuery, connection);
+                sql.Parameters.Add("@Email", SqlDbType.VarChar).Value = Email;
+                sql.Parameters.Add("@PetName", SqlDbType.VarChar).Value = Petname;
+
+
+                SqlDataAdapter adapter = new SqlDataAdapter();
+                adapter.InsertCommand = sql;
+                adapter.InsertCommand.ExecuteNonQuery();
+
+                sql.Dispose();
+                connection.Close();
+            }
+            catch (SqlException error)
+            {
+                Debug.WriteLine(error.ToString());
+            }
         }
 
         /*

@@ -34,6 +34,12 @@ namespace Playdate
 
         protected void Page_Load(object sender, EventArgs e)
         {
+            if (!Request.IsAuthenticated)
+            {
+                Response.Redirect("Default.aspx");
+                return;
+            }
+
             displayPreviousMessages();
         }
         private void displayPreviousMessages()
