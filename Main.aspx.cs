@@ -28,7 +28,8 @@ namespace Playdate
 
         private static IConfigurationRoot config = GetConfiguration();
         private static CloudTable table;
-
+        private string email;
+        
         private List<string> AnimalTypes = new List<string> { 
             "Dog",      // 0
             "Cat",      // 1
@@ -40,9 +41,7 @@ namespace Playdate
         };
 
         // by default, show all animals
-        TableQuery<Pet> query = new TableQuery<Pet>().Where(
-                    TableQuery.CombineFilters(TableQuery.GenerateFilterCondition("PartitionKey", QueryComparisons.NotEqual, ""),
-                        TableOperators.And, TableQuery.GenerateFilterCondition("RowKey", QueryComparisons.NotEqual, "")));
+        TableQuery<Pet> query;
 
         /* ConnectToTable --  instantiate a CloudTableClient object to interact with Azure Table Service
        * precondition: credentials are set up in appsetting.json
@@ -71,7 +70,7 @@ namespace Playdate
                 return;
             }
             ConnectToTable();
-            string email = ClaimsPrincipal.Current.FindFirst("http://schemas.xmlsoap.org/ws/2005/05/identity/claims/emailaddress").Value;
+            email = ClaimsPrincipal.Current.FindFirst("http://schemas.xmlsoap.org/ws/2005/05/identity/claims/emailaddress").Value;
             string name = getPetName(email);
             TableOperation retrieveOperation = TableOperation.Retrieve(Format(email), Format(name));
             DynamicTableEntity pet = (DynamicTableEntity) table.Execute(retrieveOperation).Result;
@@ -91,6 +90,10 @@ namespace Playdate
                 CheckBoxList1.Items[i].Text = "&nbsp;" + AnimalTypes[i];
             }
 
+            query = new TableQuery<Pet>().Where(TableQuery.CombineFilters(
+            TableQuery.CombineFilters(TableQuery.GenerateFilterCondition("PartitionKey", QueryComparisons.NotEqual, ""),
+                        TableOperators.And, TableQuery.GenerateFilterCondition("RowKey", QueryComparisons.NotEqual, "")),
+            TableOperators.And, TableQuery.GenerateFilterCondition("Email", QueryComparisons.NotEqual, Format(email))));
         }
 
         protected void Message_Button_Clicked(object sender, EventArgs e)
@@ -128,7 +131,7 @@ namespace Playdate
 
         protected void CheckBoxList1_SelectedIndexChanged1(object sender, EventArgs e)
         {
-            string queryFilters = TableQuery.GenerateFilterCondition("PrimaryKey", QueryComparisons.Equal, ""); // impossible condition
+            string queryFilters = TableQuery.GenerateFilterCondition("PrimaryKey", QueryComparisons.Equal, ""); // impossible condition          
             bool anyBoxChecked = false;
 
             for (int i = 0; i < CheckBoxList1.Items.Count; i++)
@@ -140,6 +143,7 @@ namespace Playdate
                 }
             }
 
+            queryFilters = TableQuery.CombineFilters(queryFilters, TableOperators.And, TableQuery.GenerateFilterCondition("Email", QueryComparisons.NotEqual, Format(email)));
             if (anyBoxChecked)
             {
                 query = new TableQuery<Pet>().Where(queryFilters);
