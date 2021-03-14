@@ -8,6 +8,7 @@ using System.Diagnostics;
 using System.Data;
 using Microsoft.Extensions.Configuration;
 using System.IO;
+using System.Web.UI.WebControls;
 
 namespace Playdate
 {
@@ -86,7 +87,9 @@ namespace Playdate
 
         protected void Message_Button_Click(object sender, EventArgs e)
         {
-            Response.Redirect("Message.aspx");
+            Button btn = (Button)sender;
+            string[] receiverInfo = btn.CommandArgument.ToString().Split(new char[] { ',' });
+            Response.Redirect($"Message.aspx?receiverEmail={receiverInfo[0]}&receiverPetname={receiverInfo[1]}");
         }
 
         protected void Back_Button_Click(object sender, EventArgs e)

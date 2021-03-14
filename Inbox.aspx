@@ -19,7 +19,7 @@
                     <asp:Label ID="ContentLabel" runat="server" Text='<%# Eval("Content") %>' Font-Bold='false' Font-Size="Medium" ForeColor="DarkGray"/>
                 </div>
                 
-                <asp:Button ID="GoToChat_Button" runat="server" Text='<%#: "Message " + Eval("PetName")%>' Style="margin-left: auto; display: block;" OnClick="Message_Button_Click"/>
+                <asp:Button ID="GoToChat_Button" runat="server" Text='<%#: "Message " + Eval("PetName")%>' Style="margin-left: auto; display: block;" OnClick="Message_Button_Click" CommandArgument='<%#Eval("ReceiverEmail")+","+ Eval("PetName")%>'/>
             <br /></span>
             </ItemTemplate>
             <LayoutTemplate>
