@@ -9,21 +9,30 @@ using System.Data;
 using Microsoft.Extensions.Configuration;
 using System.IO;
 using System.Web.UI.WebControls;
+using Microsoft.Azure.NotificationHubs;
+using System.Security.Principal;
+using System.Net.Mail;
+using System.Text;
+using System.Threading.Tasks;
+using System.Configuration;
+using System.Security.Claims;
+using Microsoft.Azure.Cosmos.Table;
 
 namespace Playdate
 {
-    
+
     public partial class Message : Page
 
-    {   private string chatRoomID;
+    {
+        private string chatRoomID;
 
         // DEBUG PURPOSE
         string senderEmail = "Heedong@uw.edu";
         string senderPetname = "Umu";
 
-        string receiverEmail = "Kaitcolbert@hotmail.com";// "Jessica.nguyen0107@gmail.com"; // "Kaitcolbert@hotmail.com";
+        string receiverEmail = "Heedong@uw.edu"; // "Kaitcolbert@hotmail.com";// "Jessica.nguyen0107@gmail.com"; // "Kaitcolbert@hotmail.com";
         string receiverPetname = "HamBoy"; // "Puppy"; 
-        
+
         static IConfigurationRoot GetConfiguration()
             => new ConfigurationBuilder()
             .SetBasePath(Directory.GetParent(AppContext.BaseDirectory).FullName)
@@ -31,7 +40,7 @@ namespace Playdate
             .Build();
 
         private static IConfigurationRoot config = GetConfiguration();
-
+        private static CloudTable tableClient;
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!Request.IsAuthenticated)
@@ -81,22 +90,23 @@ namespace Playdate
                     DateTime message_timesent = (DateTime)dataReader.GetValue(3);
 
                     Label l = new Label();
-                    
+
                     if (message_sender == senderID)
                     {
-                        l.Text = "<br /><br />[" + senderPetname + "]: "  + message_content + "&emsp;&emsp;" + message_timesent;
+                        l.Text = "<br /><br />[" + senderPetname + "]: " + message_content + "&emsp;&emsp;" + message_timesent;
                         l.CssClass = "right_align";
-                        
-                    } else
+
+                    }
+                    else
                     {
                         l.Text = "<br /><br /> [" + receiverPetname + "]: " + message_content + "&emsp;&emsp;" + message_timesent;
                         l.CssClass = "left_align";
                     }
-                    Debug.WriteLine("width: " + l.Width.ToString()); 
+                    Debug.WriteLine("width: " + l.Width.ToString());
                     Debug.WriteLine(l.CssClass.ToString());
-                    
+
                     l.BorderColor = System.Drawing.Color.Red;
-                    
+
                     Panel1.Controls.Add(l);
 
                     chatHistory.Add(message_content);
@@ -199,6 +209,14 @@ namespace Playdate
             {
                 return;
             }
+
+            //send email notif to recipient
+            string send = ConfigurationManager.AppSettings["SendEmail"];
+            if (send.ToLower() == "true")
+            {
+                SendEmail(MessageBox.Text);
+            }
+
             string content = MessageBox.Text;
             DateTime timesent = DateTime.Now;
 
@@ -215,11 +233,33 @@ namespace Playdate
             // wipe the text
             MessageBox.Text = "";
             displayPreviousMessages();
+
+
         }
 
+
+        //send notif to the other recipient
+        private void SendEmail(string body)
+        {
+            //
+            MailMessage mailmsg = new MailMessage(config["SendEmail:senderEmail"], receiverEmail);
+            mailmsg.Subject = "You received a message from " + receiverPetname + " from PlayDate!";
+            mailmsg.Body = receiverPetname + " messaged: \"" + body + "\".";
+            mailmsg.IsBodyHtml = true;
+            mailmsg.Body += "<br>Log in to <a href=\"http://playdate4pets.azurewebsites.net/\">PlayDate</a> to reply!<br><br>-The PlayDate Team :)";
+
+            using (SmtpClient smtp = new SmtpClient("smtp.gmail.com", 587))
+            {
+                smtp.UseDefaultCredentials = false;
+                smtp.Credentials = new System.Net.NetworkCredential(config["SendEmail:senderEmail"], config["SendEmail:pass"]);
+                smtp.EnableSsl = true;
+                smtp.Send(mailmsg);
+            }
+        }
         protected void Back_Button_Click(object sender, EventArgs e)
         {
             Response.Redirect("Inbox.aspx");
         }
+
     }
 }
