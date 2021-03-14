@@ -113,7 +113,7 @@ namespace Playdate
 
         protected void Profile_Button_Click(object sender, EventArgs e)
         {
-
+            Response.Redirect("Profile.aspx");
         }
     }
 
