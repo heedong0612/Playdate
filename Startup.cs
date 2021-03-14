@@ -26,7 +26,7 @@ namespace AuthTestSecure
 
         // Authority is the URL for authority, composed by Microsoft identity platform endpoint and the tenant name (e.g. https://login.microsoftonline.com/contoso.onmicrosoft.com/v2.0)
         string authority = String.Format(System.Globalization.CultureInfo.InvariantCulture, System.Configuration.ConfigurationManager.AppSettings["Authority"], tenant);
-
+        
         /// <summary>
         /// Configure OWIN to use OpenIdConnect 
         /// </summary>
