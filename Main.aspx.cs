@@ -9,6 +9,7 @@ using Microsoft.Azure.Cosmos.Table;
 using System.Diagnostics;
 using Microsoft.Extensions.Configuration;
 using System.IO;
+using System.Security.Claims;
 using Microsoft.Owin.Security;
 using Microsoft.Owin.Security.OpenIdConnect;
 using Microsoft.Owin.Security.Cookies;
@@ -61,12 +62,27 @@ namespace Playdate
                 Debug.WriteLine(e);
             }
         }
+
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!Request.IsAuthenticated)
             {
                 Response.Redirect("Default.aspx");
                 return;
+            }
+            ConnectToTable();
+            string email = ClaimsPrincipal.Current.FindFirst("http://schemas.xmlsoap.org/ws/2005/05/identity/claims/emailaddress").Value;
+            string name = getPetName(email);
+            TableOperation retrieveOperation = TableOperation.Retrieve(Format(email), Format(name));
+            DynamicTableEntity pet = (DynamicTableEntity) table.Execute(retrieveOperation).Result;
+            for (int i = 0; i < pet.Properties.Count; i++)
+            {
+                if(pet.Properties.ElementAt(i).Key == "PicID")
+                {
+                    string profile_pic_id = pet.Properties.ElementAt(i).Value.StringValue.Trim();
+                    Profile_Image.ImageUrl = "https://playdate.blob.core.windows.net/profilepictures/" + profile_pic_id;
+                    break;
+                }
             }
 
             for (int i = 0; i < AnimalTypes.Count; i++)  {
@@ -80,9 +96,29 @@ namespace Playdate
 
         }
 
+        private static string Format(string s)
+        {
+            if (string.IsNullOrWhiteSpace(s))
+            {
+                return "";
+            }
+            s = s.ToLower();
+            s = s[0].ToString().ToUpper() + s.Substring(1);
+            return s;
+        }
+
+        /*
+        * Gets the pet name from the table
+        */
+        protected string getPetName(string email)
+        {
+            TableQuery userEntry = new TableQuery().Where(TableQuery.GenerateFilterCondition("PartitionKey", QueryComparisons.Equal, Format(email)));
+            var retrievedResult = table.ExecuteQuery(userEntry);
+            return retrievedResult.ElementAt(0).RowKey;
+        }
+
         public IQueryable<Pet> GetPets()
         {
-            ConnectToTable();
             Debug.WriteLine("get pets called");
             var itemlist = table.ExecuteQuery(query);
             return itemlist.AsQueryable();
@@ -90,7 +126,6 @@ namespace Playdate
 
         protected void CheckBoxList1_SelectedIndexChanged1(object sender, EventArgs e)
         {
-            // ConnectToTable();
             string queryFilters = TableQuery.GenerateFilterCondition("PrimaryKey", QueryComparisons.Equal, ""); // impossible condition
             bool anyBoxChecked = false;
 
