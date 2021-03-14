@@ -8,6 +8,8 @@ using System.Diagnostics;
 using System.Data;
 using Microsoft.Extensions.Configuration;
 using System.IO;
+using System.Security.Claims;
+using Microsoft.Azure.Cosmos.Table;
 using System.Web.UI.WebControls;
 
 namespace Playdate
@@ -15,8 +17,10 @@ namespace Playdate
     public partial class Inbox : Page
     {
         // DEBUG PURPOSE
-        string senderEmail = "Heedong@uw.edu";
-        string senderPetname = "Umu";
+        private string senderEmail;
+        //private string senderPetname;
+        private static CloudTable table;
+
 
         static IConfigurationRoot GetConfiguration()
             => new ConfigurationBuilder()
@@ -28,18 +32,18 @@ namespace Playdate
 
         protected void Page_Load(object sender, EventArgs e)
         {
-
-            if (!Request.IsAuthenticated)
-            {
-                Response.Redirect("Default.aspx");
-                return;
-            }
-
+            senderEmail = ClaimsPrincipal.Current.FindFirst("http://schemas.xmlsoap.org/ws/2005/05/identity/claims/emailaddress").Value;
             display_Inbox();
         }
 
         public string getEmail() { return senderEmail; }
-        public string getPet() { return senderPetname; }
+        public string getPet() 
+        {
+            ConnectToTable();
+            TableQuery userEntry = new TableQuery().Where(TableQuery.GenerateFilterCondition("PartitionKey", QueryComparisons.Equal, Format(senderEmail)));
+            var retrievedResult = table.ExecuteQuery(userEntry);
+            return retrievedResult.ElementAt(0).RowKey;
+        }
 
         private void display_Inbox()
         {
@@ -57,8 +61,9 @@ namespace Playdate
 
                 connection.Open();
                 SqlCommand sql = new SqlCommand(sqlQuery, connection);
-                sql.Parameters.Add("@Email", SqlDbType.VarChar).Value = senderEmail;
-               
+                sql.Parameters.Add("@Email", SqlDbType.VarChar).Value = getEmail();
+                sql.Parameters.Add("@Pet", SqlDbType.VarChar).Value = getPet();
+
                 SqlDataReader dataReader = sql.ExecuteReader();
                 
                 string test = "";
@@ -85,6 +90,22 @@ namespace Playdate
             }
         }
 
+        private void ConnectToTable()
+        {
+            try
+            {
+                var storageAccount = Microsoft.Azure.Cosmos.Table.CloudStorageAccount.Parse(config["AzureStorage:ConnectionString"]);
+
+                var _tableClient = storageAccount.CreateCloudTableClient();
+
+                table = _tableClient.GetTableReference(config["AzureStorage:Table"]);
+            }
+            catch (Exception e)
+            {
+                Debug.WriteLine(e);
+            }
+        }
+
         protected void Message_Button_Click(object sender, EventArgs e)
         {
             Button btn = (Button)sender;
@@ -100,6 +121,16 @@ namespace Playdate
         protected void ListView1_SelectedIndexChanged(object sender, EventArgs e)
         {
             display_Inbox();
+        }
+        private static string Format(string s)
+        {
+            if (string.IsNullOrWhiteSpace(s))
+            {
+                return "";
+            }
+            s = s.ToLower();
+            s = s[0].ToString().ToUpper() + s.Substring(1);
+            return s;
         }
     }
 

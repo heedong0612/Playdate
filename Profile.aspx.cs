@@ -78,12 +78,12 @@ namespace Playdate
             try
             {
                 string name = getPetName();
-
-
                 if (!string.IsNullOrWhiteSpace(name))
                 {
                     NameTextBox.Text += name + "<br>";
                     Home.Visible = true;
+                    Load_Profile(Format(getEmail()), Format(name));
+
                 }
                 else
                 {
@@ -256,12 +256,43 @@ namespace Playdate
         }
 
         /*
-         * TODO: Load in the profile data from the database so that all the user's info is loaded for them already 
+         * Load in the profile data from the database so that all the user's info is loaded for them already 
          * when they want to edit
          */
         private void Load_Profile(string email, string name)
         {
-
+            TableOperation retrieveOperation = TableOperation.Retrieve(Format(email), Format(name));
+            DynamicTableEntity pet = (DynamicTableEntity)tableClient.Execute(retrieveOperation).Result;
+            if (pet != null)
+            {
+                for (int i = 0; i < pet.Properties.Count; i++)
+                {
+                    if (pet.Properties.ElementAt(i).Key == "Age")
+                    {
+                       AgeTextBox.Text = pet.Properties.ElementAt(i).Value.StringValue.Trim();
+                    }
+                    if (pet.Properties.ElementAt(i).Key == "Animal")
+                    {
+                        AnimalTextBox.Text = pet.Properties.ElementAt(i).Value.StringValue.Trim();
+                    }
+                    if (pet.Properties.ElementAt(i).Key == "City")
+                    {
+                        CityTextBox.Text = pet.Properties.ElementAt(i).Value.StringValue.Trim();
+                    }
+                    if (pet.Properties.ElementAt(i).Key == "State")
+                    {
+                        StateTextBox.Text = pet.Properties.ElementAt(i).Value.StringValue.Trim();
+                    }
+                    if (pet.Properties.ElementAt(i).Key == "Bio")
+                    {
+                        BioTextBox.Text = pet.Properties.ElementAt(i).Value.StringValue.Trim();
+                    }
+                   /* if (pet.Properties.ElementAt(i).Key == "PicID")
+                    {
+                        ProfilePic.ImageUrl = "https://playdate.blob.core.windows.net/profilepictures/"+pet.Properties.ElementAt(i).Value.StringValue.Trim();
+                    }*/
+                }
+            }
         }
 
         /* reads in picture user uploaded from their file and upload to blob with their email+petname as key
