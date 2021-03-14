@@ -9,12 +9,15 @@ using Microsoft.Azure.Cosmos.Table;
 using System.Diagnostics;
 using Microsoft.Extensions.Configuration;
 using System.IO;
+using Microsoft.Owin.Security;
+using Microsoft.Owin.Security.OpenIdConnect;
+using Microsoft.Owin.Security.Cookies;
 
 namespace Playdate
 {
     public partial class Main : Page
     {
-
+        string redirectUri = System.Configuration.ConfigurationManager.AppSettings["RedirectUri"];
         //sets up the credentials without hard-coding into the cs file
         static IConfigurationRoot GetConfiguration()
             => new ConfigurationBuilder()
@@ -60,11 +63,11 @@ namespace Playdate
         }
         protected void Page_Load(object sender, EventArgs e)
         {
-            //if (!Request.IsAuthenticated)
-            //{
-            //    Response.Redirect("Default.aspx");
-            //    return;
-            //}
+            if (!Request.IsAuthenticated)
+            {
+                Response.Redirect("Default.aspx");
+                return;
+            }
 
             for (int i = 0; i < AnimalTypes.Count; i++)  {
                 CheckBoxList1.Items[i].Text = "&nbsp;" + AnimalTypes[i];
@@ -114,6 +117,14 @@ namespace Playdate
         protected void Profile_Button_Click(object sender, EventArgs e)
         {
             Response.Redirect("Profile.aspx");
+        }
+
+        protected void SignOut_Button_Click(object sender, EventArgs e)
+        {
+            HttpContext.Current.GetOwinContext().Authentication.SignOut(
+                new AuthenticationProperties { RedirectUri = redirectUri },
+                OpenIdConnectAuthenticationDefaults.AuthenticationType,
+                CookieAuthenticationDefaults.AuthenticationType);
         }
     }
 
