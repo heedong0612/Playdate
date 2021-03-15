@@ -29,8 +29,8 @@
                 </asp:CheckBoxList>
             </div>
             <div>
-                <asp:Image ID="Profile_Image" runat="server" Style="margin-left: auto; display: block;" ImageUrl="https://playdate.blob.core.windows.net/profilepictures/temp_profile_picture.jpg" Width="150" Height="105"/>
-                <asp:Label ID="Label2" runat="server" Text="Note for CSS 436 classmates:" ForeColor="Red" Font-Bold="true"></asp:Label>
+                <asp:Image ID="Profile_Image" runat="server" Style="margin-left: auto; display: block;" ImageUrl="https://playdate.blob.core.windows.net/profilepictures/temp_profile_picture.jpg" Width="170" Height="120"/>
+                <asp:Label ID="Label2" runat="server" Text="Note for CSS 436 classmates:" ForeColor="Purple" Font-Bold="true"></asp:Label>
                 <asp:Label ID="Temp_Label" runat="server" Text="<br /> It will be more fun if you message the accounts that don't have [Fake account] tag in bio. Enjoy! :D - Donghee, Kaity & Jessica"></asp:Label>
                 <br />
                 <asp:Button class="signinbutton" ID="Profile_Button" runat="server" OnClick="Profile_Button_Click" Text="My Profile" Style="margin-left: auto; display: block;" Height="34px" Width="95px" />
@@ -65,16 +65,17 @@
                             <tr>
                                 <td>
                                     <a href="https://playdate.blob.core.windows.net/profilepictures/<%#:Item.PicID%>">
-                                        <img style="float: left; vertical-align: middle" src="https://playdate.blob.core.windows.net/profilepictures/<%#:Item.PicID%>"
-                                            width="150" height="105" /></a>
+                                        <img style="float: left; vertical-align: middle;" src="https://playdate.blob.core.windows.net/profilepictures/<%#:Item.PicID%>"
+                                            width="200" height="145" /></a>
 
                                     <span style="vertical-align: top; padding-left: 15px">
-                                        <b><%#:Item.RowKey%></b><span style="color: darkgrey">&emsp;<i class="fas fa-map-marker-alt"></i>&nbsp; <%#:Item.City%>, <%#:Item.State%> </span>
+                                        <b><%#:Item.RowKey%></b><span style="color: darkgrey">&emsp;<i class="fas fa-map-marker-alt"></i>&nbsp; <%#:Item.City%>, <%#:Item.State%> 
+                                           
                                     </span>
+                                    
                                     <br />
-
-                                    <div style="margin-right: auto; display: block; width: 1100px; padding-left: 165px"><%#:Item.Bio%></div>
-
+                                    <div style="margin-right: auto; display: block; width: 1100px; padding-left: 215px"><%#:Item.Bio%></div>
+                                     
                                     <asp:Button ID="Message_Button" runat="server" Style="margin-left: auto; text-align:right; display: block;" Text='<%#: "Message " + Item.RowKey%>' OnClick="Message_Button_Clicked" CommandArgument='<%#: Item.PartitionKey +","+ Item.RowKey%>' />
                                 </td>
 
@@ -86,6 +87,7 @@
                         </table>
                         </p>
                     </td>
+
                 </ItemTemplate>
                 <LayoutTemplate>
                     <table style="width: 100%;">
