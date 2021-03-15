@@ -9,9 +9,10 @@
 ### Main Feed & Profile Page
 ![](documents/Main_Prof.jpg)
 
-### Inbox & Direct Message Page
+### Inbox
 ![](documents/Inbox.jpg)
-<img src="documents/merge2.png" alt="drawing" width="850"/>
+
+### Direct Message
 ![](documents/message.jpg)
 
 ## Cloud Services Utilized
