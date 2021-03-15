@@ -7,7 +7,7 @@
 ![Welcoming Page](documents/StartingPage.jpg)
 
 ### Main Feed
-![](documents/main.jpg)
+![](documents/MainFeed.jpg)
 
 ### Profile Page
 ![](documents/Profile.jpg)
