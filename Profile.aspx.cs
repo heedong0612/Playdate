@@ -78,12 +78,14 @@ namespace Playdate
             try
             {
                 string name = getPetName();
+                
+
                 if (!string.IsNullOrWhiteSpace(name))
                 {
                     NameTextBox.Text += name + "<br>";
                     Home.Visible = true;
-                    Load_Profile(Format(getEmail()), Format(name));
 
+                    Load_Profile(Format(getEmail()), Format(name));
                 }
                 else
                 {

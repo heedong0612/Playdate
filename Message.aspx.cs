@@ -10,18 +10,27 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Azure.Cosmos.Table;
 using System.IO;
 using System.Web.UI.WebControls;
+using Microsoft.Azure.NotificationHubs;
+using System.Security.Principal;
+using System.Net.Mail;
+using System.Text;
+using System.Threading.Tasks;
+using System.Configuration;
+using System.Security.Claims;
+using Microsoft.Azure.Cosmos.Table;
 using System.Security.Claims;
 
 namespace Playdate
 {
-    
+
     public partial class Message : Page
 
-    {   private string chatRoomID;
+    {
+        private string chatRoomID;
 
         // DEBUG PURPOSE
         string senderEmail;
-        string senderPetname; // = "Umu";
+        string senderPetname;
 
         string receiverEmail; 
         string receiverPetname;
@@ -137,22 +146,29 @@ namespace Playdate
                     DateTime message_timesent = (DateTime)dataReader.GetValue(3);
 
                     Label l = new Label();
-                    
+
                     if (message_sender == senderID)
                     {
-                        l.Text = "<br /><br />[" + senderPetname + "]: "  + message_content + "&emsp;&emsp;" + message_timesent;
-                        l.CssClass = "right_align";
-                        
-                    } else
-                    {
-                        l.Text = "<br /><br /> [" + receiverPetname + "]: " + message_content + "&emsp;&emsp;" + message_timesent;
-                        l.CssClass = "left_align";
+                        //l.Text = "<br /><br />[" + senderPetname + "]: " + message_content + "&emsp;&emsp;" + message_timesent;
+                        //l.CssClass = "right_align";
+                        var pic = "https://playdate.blob.core.windows.net/profilepictures/" + senderEmail + "+" + senderPetname + ".jpg";
+                        MAINPANEL.InnerHtml += "<br /><div width=\"100%\" class = \"right_align\">[" + senderPetname + "]: " + message_content + "&emsp;&emsp;" + message_timesent + "<img class = \"chatlogo\" src=\"" + pic + "\" alt=\"Sender's Profile Pic\"></div>";
+
+
                     }
-                    Debug.WriteLine("width: " + l.Width.ToString()); 
+                    else
+                    {
+                        //l.Text = "<br /><br /> [" + receiverPetname + "]: " + message_content + "&emsp;&emsp;" + message_timesent;
+                        //l.CssClass = "left_align";
+                        var pic = "https://playdate.blob.core.windows.net/profilepictures/" + receiverEmail + "+" + receiverPetname + ".jpg"; ;
+                        MAINPANEL.InnerHtml += "<br /><div width=\"100%\" class = \"left_align\"><img class = \"chatlogo\" src=\"" + pic + "\" alt=\"Receiver's Profile Pic\">[" + receiverPetname + "]: " + message_content + "&emsp;&emsp;" + message_timesent + "</div>";
+
+                    }
+                    Debug.WriteLine("width: " + l.Width.ToString());
                     Debug.WriteLine(l.CssClass.ToString());
-                    
+
                     l.BorderColor = System.Drawing.Color.Red;
-                    
+
                     Panel1.Controls.Add(l);
 
                     chatHistory.Add(message_content);
@@ -171,7 +187,7 @@ namespace Playdate
         }
         protected void Back_Click(object sender, EventArgs e)
         {
-            Response.Redirect("Message.aspx");
+            Response.Redirect("Inbox.aspx");
         }
 
         private int getPersonID(string Email, string Petname)
@@ -255,6 +271,14 @@ namespace Playdate
             {
                 return;
             }
+
+            //send email notif to recipient
+            string send = ConfigurationManager.AppSettings["SendEmail"];
+            if (send.ToLower() == "true")
+            {
+                SendEmail(MessageBox.Text);
+            }
+
             string content = MessageBox.Text;
             DateTime timesent = DateTime.Now;
 
@@ -271,11 +295,33 @@ namespace Playdate
             // wipe the text
             MessageBox.Text = "";
             displayPreviousMessages();
+
+
         }
 
+
+        //send notif to the other recipient
+        private void SendEmail(string body)
+        {
+            //
+            MailMessage mailmsg = new MailMessage(config["SendEmail:senderEmail"], receiverEmail);
+            mailmsg.Subject = "You received a message from " + receiverPetname + " from PlayDate!";
+            mailmsg.Body = receiverPetname + " messaged: \"" + body + "\".";
+            mailmsg.IsBodyHtml = true;
+            mailmsg.Body += "<br>Log in to <a href=\"http://playdate4pets.azurewebsites.net/\">PlayDate</a> to reply!<br><br>-The PlayDate Team :)";
+
+            using (SmtpClient smtp = new SmtpClient("smtp.gmail.com", 587))
+            {
+                smtp.UseDefaultCredentials = false;
+                smtp.Credentials = new System.Net.NetworkCredential(config["SendEmail:senderEmail"], config["SendEmail:pass"]);
+                smtp.EnableSsl = true;
+                smtp.Send(mailmsg);
+            }
+        }
         protected void Back_Button_Click(object sender, EventArgs e)
         {
             Response.Redirect("Inbox.aspx");
         }
+
     }
 }
