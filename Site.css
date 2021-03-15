@@ -74,6 +74,7 @@ textarea {
 .landingContainer {
     width: 75%;
     margin: auto;
+    font-family: Calibri;
 }
 .landingContainer2 {
    width: 68%;
@@ -102,6 +103,15 @@ textarea {
     margin-right:auto;
     display:block;
 }
+tr.spaceUnder > td {
+    padding-bottom: 1em;
+}
+
+.PLAYDATE {
+    font-family: Calibri;
+    color: #fdb65c;
+    /* font-weight: bold; */
+}
 .LOGO {
     object-fit: cover;
     width: 230px;
@@ -115,7 +125,8 @@ textarea {
     margin-right: auto;
 }
 .HomePic {
-    width: 40px;
+    width: 41px;
+    height: 41px;
 }
 .signinbutton{
     width: 150px;
