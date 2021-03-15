@@ -13,17 +13,18 @@
 <img src="documents/merge2.png" alt="drawing" width="850"/>
 
 
-## 3/13/2021
+## Cloud Services Utilized
+**Azure App Serive** Incorporated Azure SQL DB to save and query previous messages. <br />Message page now can display old chats between the users. Inbox page now contains all the chat rooms that has been open.
 
-**Added** Incorporated Azure SQL DB to save and query previous messages. <br />Message page now can display old chats between the users. Inbox page now contains all the chat rooms that has been open.
+**Azure SQL Databse** Saves and loads previous message histories for each chat room.
 
-**Added** Logo and Fonts updated.
+**Gmail Notifications** Alerts the user when they receive a message from other users.
 
-## 3/11/2021
+**Azure Blob Storage** Saves the profile picutres of the users.
 
-**Added** Blank Inbox and Message pages. To be completed.
+**Azure Table** Logs the user attributes.
 
-## 3/10/2021
+**Azure Authentication** Enables sign in/up using Google and Microsoft accounts.
 
-**Added** Login, Main feed, and Profile pages. All three pages are merged and work together.
+
 
