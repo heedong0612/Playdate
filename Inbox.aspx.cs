@@ -20,7 +20,6 @@ namespace Playdate
         private string senderEmail;
         private static CloudTable table;
 
-
         static IConfigurationRoot GetConfiguration()
             => new ConfigurationBuilder()
             .SetBasePath(Directory.GetParent(AppContext.BaseDirectory).FullName)

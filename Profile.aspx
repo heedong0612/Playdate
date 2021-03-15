@@ -46,7 +46,7 @@
             <br />
 
             <div class="savebutton">
-                <asp:Label class="left_align" ID="NameTextBox" runat="server" Text="Pet Name: "></asp:Label>
+                <asp:Label class="left_align" ID="NameTextBox" runat="server" Text="Pet Name: "></asp:Label> 
             </div>
             <%--  <asp:TextBox ID="NameTextBox" runat="server"></asp:TextBox>--%>
             <br />
@@ -101,7 +101,7 @@
             <p>Upload your Profile Picture Here:</p>
             <asp:FileUpload ID="PhotoUpload" runat="server" Text="Upload Picture" onchange="readURL(this);" accept="image/jpeg, image/png" />
             <br />
-            <img id="ProfilePic" src="#" runat="server" alt="Your Pet Profile Picture" />
+            <img id="ProfilePic" src="#" runat="server" alt="Your Pet Profile Picture" width="400"/>
             <br />
             <br />
             <asp:Label class="error" ID="Label1" runat="server" Text=""></asp:Label>

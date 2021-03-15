@@ -73,23 +73,21 @@ namespace Playdate
         protected void Page_Load(object sender, EventArgs e)
         {
             ConnectToTable();
-            //if (!Request.IsAuthenticated)
-            //{
-            //    Response.Redirect("Default.aspx");
-            //    return;
-            //}
+            if (!Request.IsAuthenticated)
+            {
+                Response.Redirect("Default.aspx");
+                return;
+            }
             try
             {
-                string name =  "Puppy";
-                    //getPetName();
+                string name = getPetName();
 
 
                 if (!string.IsNullOrWhiteSpace(name))
                 {
-                    NameTextBox.Text += name + "<br>";
+                    NameTextBox.Text = name + "<br>";
                     Home.Visible = true;
-                    Load_Profile("Jessica.nguyen0107@gmail.com", "Puppy");
-                    // Format(getEmail()), Format(name));
+                    Load_Profile(Format(getEmail()), Format(name));
                 }
                 else
                 {
@@ -176,6 +174,7 @@ namespace Playdate
         // check if the input state is of appropriate form
         private static bool isStateAbbreviation(string state)
         {
+            state = state.ToUpper();
             string states = "|AL|AK|AS|AZ|AR|CA|CO|CT|DE|DC|FM|FL|GA|GU|HI|ID|IL|IN|IA|KS|KY|LA|ME|MH|MD|MA|MI|MN|MS|MO|MT|NE|NV|NH|NJ|NM|NY|NC|ND|MP|OH|OK|OR|PW|PA|PR|RI|SC|SD|TN|TX|UT|VT|VI|VA|WA|WV|WI|WY|";
 
             return state.Length == 2 && states.IndexOf(state) > 0;

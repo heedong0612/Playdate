@@ -131,14 +131,14 @@ namespace Playdate
 
                     if (message_sender == senderID)
                     {
-                        var pic = "https://playdate.blob.core.windows.net/profilepictures/" + senderEmail + "+" + senderPetname + ".jpg";
+                        var pic = "https://playdate.blob.core.windows.net/profilepictures/" + Format(senderEmail) + "+" + Format(senderPetname) + ".jpg";
                         MAINPANEL.InnerHtml += "<br /><div width=\"100%\" class = \"right_align\">[" + senderPetname + "]: " + message_content + "&emsp;&emsp;" + message_timesent + "<img class = \"chatlogo\" src=\"" + pic + "\" alt=\"Sender's Profile Pic\"></div>";
 
 
                     }
                     else
                     {
-                        var pic = "https://playdate.blob.core.windows.net/profilepictures/" + receiverEmail + "+" + receiverPetname + ".jpg"; ;
+                        var pic = "https://playdate.blob.core.windows.net/profilepictures/" + Format(receiverEmail) + "+" + Format(receiverPetname) + ".jpg"; ;
                         MAINPANEL.InnerHtml += "<br /><div width=\"100%\" class = \"left_align\"><img class = \"chatlogo\" src=\"" + pic + "\" alt=\"Receiver's Profile Pic\">[" + receiverPetname + "]: " + message_content + "&emsp;&emsp;" + message_timesent + "</div>";
                     }
 

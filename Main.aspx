@@ -14,7 +14,6 @@
             <hgroup>
                 <h2><%: Title %></h2>
             </hgroup>
-
             <br />
 
             <div class="checklist" style="float: left; width: 150px">
