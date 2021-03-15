@@ -86,7 +86,7 @@ namespace Playdate
                 if (!string.IsNullOrWhiteSpace(name))
                 {
                     
-                    NameTextBox.Text = name + "<br>";
+                    NameTextBox.Text = name;
                     Home.Visible = true;
                     if (!IsPostBack)
                     {

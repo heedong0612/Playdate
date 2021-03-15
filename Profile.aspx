@@ -45,8 +45,8 @@
             <br />
             <br />
 
-            <div class="savebutton">
-                <asp:Label class="left_align" ID="NameTextBox" runat="server" Text="Pet Name: "></asp:Label> 
+            <div class="petnameContainer">
+                <asp:Label class="left_align" ID="NameTextBox" runat="server" Text=""></asp:Label> 
             </div>
             <%--  <asp:TextBox ID="NameTextBox" runat="server"></asp:TextBox>--%>
             <br />

@@ -64,13 +64,13 @@ namespace Playdate
 
         protected void Page_Load(object sender, EventArgs e)
         {
-            //if (!Request.IsAuthenticated)
-            //{
-            //    Response.Redirect("Default.aspx");
-            //    return;
-            //}
+            if (!Request.IsAuthenticated)
+            {
+                Response.Redirect("Default.aspx");
+                return;
+            }
             ConnectToTable();
-            email = "Heedong@uw.edu";// ClaimsPrincipal.Current.FindFirst("http://schemas.xmlsoap.org/ws/2005/05/identity/claims/emailaddress").Value;
+            email = ClaimsPrincipal.Current.FindFirst("http://schemas.xmlsoap.org/ws/2005/05/identity/claims/emailaddress").Value;
             
             string name = getPetName(email);
             TableOperation retrieveOperation = TableOperation.Retrieve(Format(email), Format(name));

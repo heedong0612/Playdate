@@ -43,6 +43,13 @@ textarea {
     bottom: 0;
 }
 
+.petnameContainer {
+    text-align: left;
+    display: block;
+    margin: 0 auto;
+    font-size:20px;
+}
+
 .savebutton {
     text-align: center;
     display: block;

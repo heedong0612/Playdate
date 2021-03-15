@@ -71,7 +71,7 @@
                                     </span>
                                     <br />
 
-                                    <div style="margin-right: auto; display: block; width: 1400px; padding-left: 165px"><%#:Item.Bio%></div>
+                                    <div style="margin-right: auto; display: block; width: 1100px; padding-left: 165px"><%#:Item.Bio%></div>
 
                                     <asp:Button ID="Message_Button" runat="server" Style="margin-left: auto; display: block;" Text='<%#: "Message " + Item.RowKey%>' OnClick="Message_Button_Clicked" CommandArgument='<%#: Item.PartitionKey +","+ Item.RowKey%>' />
                                 </td>
