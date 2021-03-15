@@ -29,7 +29,7 @@
                 </asp:CheckBoxList>
             </div>
             <div>
-                <asp:Image ID="Profile_Image" runat="server" Style="margin-left: auto; display: block;" ImageUrl="https://playdate.blob.core.windows.net/profilepictures/temp_profile_picture.jpg" Width="150" Height="105" />
+                <asp:Image ID="Profile_Image" runat="server" Style="margin-left: auto; display: block;" ImageUrl="https://playdate.blob.core.windows.net/profilepictures/temp_profile_picture.jpg" Width="150" Height="105"/>
                 <asp:Label ID="Label2" runat="server" Text="Note for CSS 436 classmates:" ForeColor="Red" Font-Bold="true"></asp:Label>
                 <asp:Label ID="Temp_Label" runat="server" Text="<br /> It will be more fun if you message the accounts that don't have [Fake account] tag in bio. Enjoy! :D - Donghee, Kaity & Jessica"></asp:Label>
                 <br />
@@ -75,7 +75,7 @@
 
                                     <div style="margin-right: auto; display: block; width: 1100px; padding-left: 165px"><%#:Item.Bio%></div>
 
-                                    <asp:Button ID="Message_Button" runat="server" Style="margin-left: auto; display: block;" Text='<%#: "Message " + Item.RowKey%>' OnClick="Message_Button_Clicked" CommandArgument='<%#: Item.PartitionKey +","+ Item.RowKey%>' />
+                                    <asp:Button ID="Message_Button" runat="server" Style="margin-left: auto; text-align:right; display: block;" Text='<%#: "Message " + Item.RowKey%>' OnClick="Message_Button_Clicked" CommandArgument='<%#: Item.PartitionKey +","+ Item.RowKey%>' />
                                 </td>
 
                             </tr>
