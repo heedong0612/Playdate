@@ -4,12 +4,10 @@
 #### ID:  *playdate4tests@gmail.com* <br />PWD: *playdate1234*
 
 ### Welcoming Page
-![Welcoming Page](documents/StartingPage.jpg =750x)
 <img src="documents/StartingPage.jpg" alt="drawing" width="750"/>
 
 ### Main Feed & Profile Page
-![Main and Profile](documents/merge1.png)
-
+<img src="documents/merge1.png" alt="drawing" width="750"/>
 ### Inbox & Direct Message Page
 ![Inbox and DM](documents/merge2.png)
 
