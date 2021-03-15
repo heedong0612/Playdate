@@ -85,7 +85,7 @@ namespace Playdate
                         break;
                     }
                 }
-                Profile_Image.ImageUrl = "https://playdate.blob.core.windows.net/profilepictures/temp_profile_picture.jpg";
+                
             }            
 
             for (int i = 0; i < AnimalTypes.Count; i++)  {
