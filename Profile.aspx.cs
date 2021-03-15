@@ -16,6 +16,9 @@ using System.Web;
 using Microsoft.AspNet.Identity.Owin;
 using System.DirectoryServices.AccountManagement;
 using System.Security.Claims;
+using System.Net;
+using System.Drawing;
+using System.Drawing.Imaging;
 
 namespace Playdate
 {
@@ -34,7 +37,7 @@ namespace Playdate
         //private static BlobBaseClient containerClient;
         List<Pet> petList = new List<Pet>();
         private static string email = "";
-
+        private string picID;
         /*
          * Gets the user email from the table to display for "Logged in as"
          */
@@ -70,21 +73,23 @@ namespace Playdate
         protected void Page_Load(object sender, EventArgs e)
         {
             ConnectToTable();
-            if (!Request.IsAuthenticated)
-            {
-                Response.Redirect("Default.aspx");
-                return;
-            }
+            //if (!Request.IsAuthenticated)
+            //{
+            //    Response.Redirect("Default.aspx");
+            //    return;
+            //}
             try
             {
-                string name = getPetName();
-                
+                string name =  "Puppy";
+                    //getPetName();
+
 
                 if (!string.IsNullOrWhiteSpace(name))
                 {
                     NameTextBox.Text += name + "<br>";
                     Home.Visible = true;
-                    Load_Profile(Format(getEmail()), Format(name));
+                    Load_Profile("Jessica.nguyen0107@gmail.com", "Puppy");
+                    // Format(getEmail()), Format(name));
                 }
                 else
                 {
@@ -140,7 +145,7 @@ namespace Playdate
                 }
 
 
-                string picID = Format(getEmail()) + "+" + Format(getPetName()) + ".jpg"; //TO BE OBTAINED FROM AUTHENTICATION
+                picID = Format(getEmail()) + "+" + Format(getPetName()) + ".jpg"; //TO BE OBTAINED FROM AUTHENTICATION
                                                                                          //Format(EmailTextBox.Text) + "+" + Format(NameTextBox.Text) + ".jpg";
                 if (!UploadPic(picID))
                 {
@@ -289,10 +294,11 @@ namespace Playdate
                     {
                         BioTextBox.Text = pet.Properties.ElementAt(i).Value.StringValue.Trim();
                     }
-                    /* if (pet.Properties.ElementAt(i).Key == "PicID")
-                     {
-                         ProfilePic.ImageUrl = "https://playdate.blob.core.windows.net/profilepictures/"+pet.Properties.ElementAt(i).Value.StringValue.Trim();
-                     }*/
+                    if (pet.Properties.ElementAt(i).Key == "PicID")
+                    {
+                        ProfilePic.Src = "https://playdate.blob.core.windows.net/profilepictures/" + email + "+" + name + ".jpg";
+
+                    }
                 }
             }
         }
@@ -303,8 +309,10 @@ namespace Playdate
         {
             try
             {
+                
                 if (PhotoUpload.HasFile)
                 {
+                    
                     Stream photoStream = PhotoUpload.PostedFile.InputStream;
                     int photoLength = PhotoUpload.PostedFile.ContentLength;
                     string photoMime = PhotoUpload.PostedFile.ContentType;
@@ -323,10 +331,10 @@ namespace Playdate
                     BlobBlock.UploadFromByteArray(fileContent, 0, fileContent.Length);
                     return true;
                 }
-                else
-                {
-                    Label1.Text = "ERROR: No picture uploaded. Please upload a profile picture in jpg or png form.";
-                }
+                //else
+                //{
+                //    Label1.Text = "ERROR: No picture uploaded. Please upload a profile picture in jpg or png form.";
+                //}
             }
             catch (Exception ex)
             {

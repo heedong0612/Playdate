@@ -4,19 +4,36 @@
     <link rel="stylesheet" href="./style.css">
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Raleway&display=swap" rel="stylesheet">
-    <%--<link rel='stylesheet' href='https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css'>--%>
-    
-    <script src='https://code.jquery.com/jquery-3.5.1.slim.min.js'></script>
-    <script src='https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js'></script>
+    <%--  <script src='https://code.jquery.com/jquery-3.5.1.slim.min.js'></script>
+    <script src='https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js'></script>--%>
+
     <style>
         article, aside, figure, footer, header, hgroup,
         menu, nav, section {
             display: block;
         }
     </style>
-    <script src="./script.js"></script>
-     <h2>Profile Page</h2>
-    <div class="body">       
+    <%--<script src="./script.js" type="text/javascript"></script>--%>
+    <script>
+        // JavaScript source code
+        function readURL(input) {
+            $('#ProfilePic').attr('src', "#");
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
+
+                reader.onload = function (e) {
+                    $('#ProfilePic')
+                        .attr('src', e.target.result)
+                        .width(150)
+                        .height(200);
+                };
+                // document.getElementById("Label2").Text = "LOADED JAVASCRIPT";
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+    </script>
+    <h2>Profile Page</h2>
+    <div class="body">
 
         <div class="container">
 
@@ -37,36 +54,38 @@
 
             <table>
                 <tr>
-                    <td><asp:Label ID="Age" runat="server" Text="Age:"></asp:Label></td>
-                    <td> <asp:TextBox ID="AgeTextBox" runat="server"></asp:TextBox></td>
+                    <td>
+                        <asp:Label ID="Age" runat="server" Text="Age:"></asp:Label></td>
+                    <td>
+                        <asp:TextBox ID="AgeTextBox" runat="server"></asp:TextBox></td>
                 </tr>
-                 <tr>
-                     <td>
-                         <asp:Label ID="Animal" runat="server" Text="Animal Type:"></asp:Label>
-                     </td>
-                     <td>
-                         <asp:TextBox ID="AnimalTextBox" runat="server"></asp:TextBox>
-                     </td>
-                 </tr>
                 <tr>
-                     <td>
-                         <asp:Label ID="City" runat="server" Text="City:"></asp:Label>
-                     </td>
-                     <td>
-                         <asp:TextBox ID="CityTextBox" runat="server"></asp:TextBox>
-                     </td>
-                 </tr>
+                    <td>
+                        <asp:Label ID="Animal" runat="server" Text="Animal Type:"></asp:Label>
+                    </td>
+                    <td>
+                        <asp:TextBox ID="AnimalTextBox" runat="server"></asp:TextBox>
+                    </td>
+                </tr>
                 <tr>
-                     <td>
-                          <asp:Label ID="State" runat="server" Text="State:"></asp:Label>
-                     </td>
-                     <td>
-                         <asp:TextBox ID="StateTextBox" runat="server"></asp:TextBox>
-                     </td>
-                 </tr>
-                
+                    <td>
+                        <asp:Label ID="City" runat="server" Text="City:"></asp:Label>
+                    </td>
+                    <td>
+                        <asp:TextBox ID="CityTextBox" runat="server"></asp:TextBox>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <asp:Label ID="State" runat="server" Text="State:"></asp:Label>
+                    </td>
+                    <td>
+                        <asp:TextBox ID="StateTextBox" runat="server"></asp:TextBox>
+                    </td>
+                </tr>
 
-            </table>    
+
+            </table>
 
             <br />
             <asp:Label ID="Bio" runat="server" Text="Upload your Bio:"></asp:Label>
@@ -78,10 +97,11 @@
             <br />
             <hr />
             <br />
+
             <p>Upload your Profile Picture Here:</p>
             <asp:FileUpload ID="PhotoUpload" runat="server" Text="Upload Picture" onchange="readURL(this);" accept="image/jpeg, image/png" />
             <br />
-            <img id="ProfilePic" src="#" alt="Your Pet Profile Picture" />
+            <img id="ProfilePic" src="#" runat="server" alt="Your Pet Profile Picture" />
             <br />
             <br />
             <asp:Label class="error" ID="Label1" runat="server" Text=""></asp:Label>
