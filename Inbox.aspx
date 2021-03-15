@@ -40,10 +40,9 @@
                 </span>
             </SelectedItemTemplate>
         </asp:ListView>
-        <asp:SqlDataSource ID="PlaydateDataSource" runat="server" ConnectionString="<%$ ConnectionStrings:PlaydateDBConnectionString %>" SelectCommand="SELECT [ReceiverID], (SELECT PetName FROM Person WHERE (PersonID = Chat.ReceiverID)) AS 'PetName', (SELECT Email FROM Person WHERE (PersonID = Chat.ReceiverID)) AS 'ReceiverEmail', [Content] FROM Chat WHERE (SenderID IN (SELECT Chat.SenderID FROM Person AS Person_2 WHERE (Email = @Email) AND (PetName = @Pet))) AND (TimeSent IN (SELECT MAX(TimeSent) AS latest_timesent FROM Chat AS Chat_1 WHERE (SenderID IN (SELECT Chat_1.SenderID FROM Person AS Person_1 WHERE (Email = @Email) AND (PetName = @Pet))) GROUP BY ChatRoomID))">
+        <asp:SqlDataSource ID="PlaydateDataSource" runat="server" ConnectionString="<%$ ConnectionStrings:PlaydateDBConnectionString %>" SelectCommand="SELECT main.[Content], (SELECT Email FROM Person WHERE (PersonID = main.ReceiverID)) AS Expr1, (SELECT PetName FROM Person AS Person_3 WHERE (PersonID = main.ReceiverID)) AS Expr2 FROM Chat AS main RIGHT OUTER JOIN (SELECT ChatRoomID, MAX(TimeSent) AS ts FROM Chat WHERE (SenderID IN (SELECT PersonID FROM Person AS Person_2 WHERE (Email = @Email))) OR (ReceiverID IN (SELECT PersonID FROM Person AS Person_1 WHERE (Email = @Email))) GROUP BY ChatRoomID, SenderID, ReceiverID) AS subq ON main.ChatRoomID = subq.ChatRoomID AND main.TimeSent = subq.ts">
          <SelectParameters>
-                <asp:Parameter DefaultValue="Heedong@uw.edu" Name="Email" DbType="String" />
-                <asp:Parameter DefaultValue="Umu" Name="Pet" DbType="String" />
+                <asp:Parameter DefaultValue="" Name="Email" DbType="String" />
             </SelectParameters>
         </asp:SqlDataSource>
     <asp:Button ID="Back_Button" runat="server" OnClick="Back_Button_Click" Text="Back To Main" />
