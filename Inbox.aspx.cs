@@ -62,31 +62,14 @@ namespace Playdate
                 builder.InitialCatalog = config.GetValue<string>("PlaydateDB:Catalog");
 
                 SqlConnection connection = new SqlConnection(builder.ConnectionString);
-                string sqlQuery = "select Content, (select Email from Person where PersonID = receiverID) as ReceiverEmail, (select Petname from Person where PersonID = receiverID) as RecevierPetname, (select Email from Person where PersonID = senderID) as SenderEmail, (select Petname from Person where PersonID = senderID) as SenderPetname from[dbo].[Chat] as main right join (select chatRoomID, max(timesent) as ts from[dbo].[Chat] where senderID in (select PersonID from[dbo].[Person] where Email = '"+getEmail()+"') or receiverID in (select PersonID from[dbo].[Person] where Email = '"+getEmail()+"') group by ChatRoomID, senderID, receiverID) subq on main.chatroomID = subq.chatroomID and main.timesent = subq.ts";
+                string myEmail = getEmail();
+                string sqlQuery = "select Content, CASE when '"+ myEmail + "' = (select Email from Person where PersonID = receiverID) then(select Petname from Person where PersonID = senderID) else (select Petname from Person where PersonID = receiverID) END as PetName, CASE when '" + myEmail + "' = (select Email from Person where PersonID = receiverID) then(select Email from Person where PersonID = senderID) else (select Email from Person where PersonID = receiverID) END as ReceiverEmail from[dbo].[Chat] as main right join (select chatRoomID, max(timesent) as ts from[dbo].[Chat] where senderID in (select PersonID from[dbo].[Person] where Email = '"+ myEmail +"') or receiverID in (select PersonID from[dbo].[Person] where Email = '" + myEmail +"') group by ChatRoomID) subq on main.chatroomID = subq.chatroomID and main.timesent = subq.ts";
 
                 connection.Open();
                 SqlCommand sql = new SqlCommand(sqlQuery, connection);
                 PlaydateDataSource.SelectCommand = sqlQuery;
-
-                SqlDataReader dataReader = sql.ExecuteReader();
                 
-                string test = "";
-
-                while (dataReader.Read())
-                {              
-                    if (dataReader.GetValue(0) != System.DBNull.Value)
-                    {
-                        var lastMessage = dataReader.GetValue(0);
-                        var receiverEmail = dataReader.GetValue(1);
-                        var petName = dataReader.GetValue(2);
-                        if (receiverEmail == senderEmail)
-                        {
-                            petName = dataReader.GetValue(4);
-                        }
-                        Debug.WriteLine(petName);
-                        test += "<br /><br />" + petName + "<br />" + lastMessage;
-                    } 
-                }
+                SqlDataReader dataReader = sql.ExecuteReader();
                 
                 sql.Dispose();
                 connection.Close();
