@@ -84,8 +84,19 @@ namespace Playdate
                 {
                     NameTextBox.Text += name + "<br>";
                     Home.Visible = true;
+                   // TableQuery<Pet> CustomerQuery = new TableQuery<Pet>().Where(
+                   //TableQuery.GenerateFilterCondition("PartitionKey", QueryComparisons.Equal, Format(getEmail())
+                   //));
+                   // var itemlist = tableClient.ExecuteQuery(CustomerQuery);
+                   // foreach (Pet res in itemlist)
+                   // {
+                   //     AgeTextBox.Text = res.Age;
+                   //     AnimalTextBox.Text = res.Animal;
+                   //     CityTextBox.Text = res.City;
+                   //     StateTextBox.Text = res.State;
+                   //     BioTextBox.Text = res.Bio;
 
-                    Load_Profile(Format(getEmail()), Format(name));
+                   // }
                 }
                 else
                 {
@@ -206,6 +217,7 @@ namespace Playdate
         }
 
         /* Format -- formats all input text to capitalize only the first letter of input string 
+
          * postcondition: returns empty string if input is null or only whitespace
          */
         private static string Format(string s)
@@ -258,43 +270,12 @@ namespace Playdate
         }
 
         /*
-         * Load in the profile data from the database so that all the user's info is loaded for them already 
+         * TODO: Load in the profile data from the database so that all the user's info is loaded for them already 
          * when they want to edit
          */
         private void Load_Profile(string email, string name)
         {
-            TableOperation retrieveOperation = TableOperation.Retrieve(Format(email), Format(name));
-            DynamicTableEntity pet = (DynamicTableEntity)tableClient.Execute(retrieveOperation).Result;
-            if (pet != null)
-            {
-                for (int i = 0; i < pet.Properties.Count; i++)
-                {
-                    if (pet.Properties.ElementAt(i).Key == "Age")
-                    {
-                       AgeTextBox.Text = pet.Properties.ElementAt(i).Value.StringValue.Trim();
-                    }
-                    if (pet.Properties.ElementAt(i).Key == "Animal")
-                    {
-                        AnimalTextBox.Text = pet.Properties.ElementAt(i).Value.StringValue.Trim();
-                    }
-                    if (pet.Properties.ElementAt(i).Key == "City")
-                    {
-                        CityTextBox.Text = pet.Properties.ElementAt(i).Value.StringValue.Trim();
-                    }
-                    if (pet.Properties.ElementAt(i).Key == "State")
-                    {
-                        StateTextBox.Text = pet.Properties.ElementAt(i).Value.StringValue.Trim();
-                    }
-                    if (pet.Properties.ElementAt(i).Key == "Bio")
-                    {
-                        BioTextBox.Text = pet.Properties.ElementAt(i).Value.StringValue.Trim();
-                    }
-                   /* if (pet.Properties.ElementAt(i).Key == "PicID")
-                    {
-                        ProfilePic.ImageUrl = "https://playdate.blob.core.windows.net/profilepictures/"+pet.Properties.ElementAt(i).Value.StringValue.Trim();
-                    }*/
-                }
-            }
+
         }
 
         /* reads in picture user uploaded from their file and upload to blob with their email+petname as key
@@ -323,10 +304,10 @@ namespace Playdate
                     BlobBlock.UploadFromByteArray(fileContent, 0, fileContent.Length);
                     return true;
                 }
-                else
-                {
-                    Label1.Text = "ERROR: No picture uploaded. Please upload a profile picture in jpg or png form.";
-                }
+                //else
+                //{
+                //    Label1.Text = "ERROR: No picture uploaded. Please upload a profile picture in jpg or png form.";
+                //}
             }
             catch (Exception ex)
             {
