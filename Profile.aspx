@@ -1,4 +1,4 @@
-﻿<%@ Page Title="Profile" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="Profile.aspx.cs" Inherits="Playdate.Profile" %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="Profile.aspx.cs" Inherits="Playdate.Profile" %>
 
 <asp:Content ID="BodyContent" ContentPlaceHolderID="MainContent" runat="server">
     <link rel="stylesheet" href="./style.css">
@@ -20,7 +20,7 @@
 
         <div class="container">
 
-            <img class="LOGO" src="LOGO.png" runat="server" />
+            <img class="LOGO" src="https://playdate.blob.core.windows.net/profilepictures/LOGO.png" runat="server" />
             <br />
             <asp:Label class="applabel" ID="AppName" runat="server" Text="PLAYDATE"></asp:Label>
 
@@ -29,7 +29,7 @@
             <br />
 
             <div class="savebutton">
-                <asp:Label class="nametext" ID="NameTextBox" runat="server" Text="ACCOUNT NAME IS: "></asp:Label>
+                <asp:Label class="left_align" ID="NameTextBox" runat="server" Text="Pet Name: "></asp:Label>
             </div>
             <%--  <asp:TextBox ID="NameTextBox" runat="server"></asp:TextBox>--%>
             <br />
@@ -107,7 +107,7 @@
 
             <br />
 
-            <img class="HomePic" src="HOME.png" runat="server" />
+            <img class="HomePic" src="https://playdate.blob.core.windows.net/profilepictures/HOME.png" runat="server" />
             <asp:Button class="signinbutton" ID="Home" runat="server" Text="Back To Main" OnClick="Main_Click" />
 
 
