@@ -79,7 +79,7 @@ textarea {
 .landingContainer2 {
    width: 68%;
    text-align:right;
-    margin-left: auto;
+   margin-left: auto;
 }
 /*.checklist{
     padding: 20px;
@@ -131,7 +131,14 @@ tr.spaceUnder > td {
 .signinbutton{
     width: 150px;
     height: 50px;
+    font-family:Calibri;
+    font-size:large;
 }
+
+.calibri{
+    font-family:Calibri;
+}
+
 .nametext{
     
 }
