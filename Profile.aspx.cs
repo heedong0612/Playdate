@@ -19,6 +19,7 @@ using System.Security.Claims;
 using System.Net;
 using System.Drawing;
 using System.Drawing.Imaging;
+using System.Diagnostics;
 
 namespace Playdate
 {
@@ -148,15 +149,11 @@ namespace Playdate
 
 
                 picID = Format(getEmail()) + "+" + Format(getPetName()) + ".jpg"; //TO BE OBTAINED FROM AUTHENTICATION
-                                                                                         //Format(EmailTextBox.Text) + "+" + Format(NameTextBox.Text) + ".jpg";
-                if (!UploadPic(picID))
-                {
-                    return;
-                }
+                                                                                  //Format(EmailTextBox.Text) + "+" + Format(NameTextBox.Text) + ".jpg";
+                UploadPic(picID);
 
-                Pet p = new Pet(//Format(NameTextBox.Text), 
+                Pet p = new Pet(
                     Format(getEmail()), Format(getPetName()), Format(AgeTextBox.Text), Format(AnimalTextBox.Text), Format(CityTextBox.Text), Format(StateTextBox.Text),
-                    //Format(EmailTextBox.Text), 
                     Format(BioTextBox.Text), picID);
 
                 if (!AddToTable(p))
@@ -312,14 +309,15 @@ namespace Playdate
 
         /* reads in picture user uploaded from their file and upload to blob with their email+petname as key
          */
-        private bool UploadPic(string picID)
+        private void UploadPic(string picID)
         {
-            try
+            if (PhotoUpload.HasFile)
             {
-                
-                if (PhotoUpload.HasFile)
+                try
                 {
-                    
+
+
+
                     Stream photoStream = PhotoUpload.PostedFile.InputStream;
                     int photoLength = PhotoUpload.PostedFile.ContentLength;
                     string photoMime = PhotoUpload.PostedFile.ContentType;
@@ -336,21 +334,15 @@ namespace Playdate
                     BlobBlock.Properties.ContentType = "image/jpg";
                     var fileContent = photoData;
                     BlobBlock.UploadFromByteArray(fileContent, 0, fileContent.Length);
-                    return true;
+
                 }
-                //else
-                //{
-                //    Label1.Text = "ERROR: No picture uploaded. Please upload a profile picture in jpg or png form.";
-                //}
-            }
-            catch (Exception ex)
-            {
-                Label2.Text = "ERROR: " + ex.Message;
-                Label2.Text += "<br>ERROR: Unable to upload profile picture. Please try again.";
+                catch (Exception ex)
+                {
+                    Label2.Text = "ERROR: " + ex.Message;
+                    Label2.Text += "<br>ERROR: Unable to upload profile picture. Please try again.";
 
+                }
             }
-            return false;
         }
-
     }
 }
