@@ -4,13 +4,13 @@
 #### ID:  *playdate4tests@gmail.com* <br />PWD: *playdate1234*
 
 ### Welcoming Page
-![Welcoming Page](Documents/StartingPage.png)
+![Welcoming Page](documents/StartingPage.png)
 
 ### Main Feed & Profile Page
-![Main and Profile](Documents/merge1.png)
+![Main and Profile](documents/merge1.png)
 
 ### Inbox & Direct Message Page
-![Inbox and DM](Documents/merge2.png)
+![Inbox and DM](documents/merge2.png)
 
 
 ## 3/13/2021
