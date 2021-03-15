@@ -10,7 +10,7 @@
 
     <div class="body">
 
-        <img class="LOGOPIC" src="LOGO.png" runat="server" />
+        <img class="LOGOPIC" src="https://playdate.blob.core.windows.net/profilepictures/LOGO.png" runat="server" />
         <br />
         <div class="applabel">
             <asp:Label class="AppName" runat="server" Text="PLAYDATE"></asp:Label>
@@ -18,7 +18,7 @@
         <br />
         <div class="jumbotron">
             <h1 class="display-4">Hello, friends!</h1>
-            <img src="banner.jpg" class="d-block w-100 bannerpic" alt="mainpic">
+            <img src="https://playdate.blob.core.windows.net/profilepictures/mainImg.jpg" class="d-block w-100 bannerpic" alt="mainpic">
             <p class="lead">
                 Message. Chat. Playdate. It’s easy and fun to find other pet friends on Playdate. Make your pet's profile stand out with your best pic of them and a little something about them to share the happiness. Once messaged, you will be able to connect with other pets all around the States for a fun day playday!
 
@@ -31,8 +31,8 @@ Playdate is the biggest and flyest party in the world for pets — it’s about 
             { %>
         <h3>
             <asp:Button class="signinbutton" ID="SignIn" runat="server" Text="Sign In" OnClick="SignIn_Click" />
-            &nbsp;<asp:Image class="MSLOGO" src="MS.png" runat="server" />
-            &nbsp;<asp:Image class="GGLOGO" src="Google.png" runat="server" />
+            &nbsp;<asp:Image class="MSLOGO" src="https://playdate.blob.core.windows.net/profilepictures/MS.png" runat="server" />
+            &nbsp;<asp:Image class="GGLOGO" src="https://playdate.blob.core.windows.net/profilepictures/Google.png" runat="server" />
         </h3>
         <% }
             else

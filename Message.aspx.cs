@@ -17,8 +17,6 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Configuration;
 using System.Security.Claims;
-using Microsoft.Azure.Cosmos.Table;
-using System.Security.Claims;
 
 namespace Playdate
 {
@@ -36,7 +34,7 @@ namespace Playdate
         string receiverPetname;
         
         static IConfigurationRoot GetConfiguration()
-            => new ConfigurationBuilder()
+            => new Microsoft.Extensions.Configuration.ConfigurationBuilder()
             .SetBasePath(Directory.GetParent(AppContext.BaseDirectory).FullName)
             .AddJsonFile("appsettings.json")
             .Build();
@@ -134,10 +132,9 @@ namespace Playdate
 
                 SqlDataReader dataReader = sql.ExecuteReader();
 
-                List<string> chatHistory = new List<string>();
-
                 // string test = "";
-                Panel1.Controls.Clear();
+                //Panel1.Controls.Clear();
+                MAINPANEL.InnerHtml = "";
                 while (dataReader.Read())
                 {
                     string message_content = (string)dataReader.GetValue(0);
@@ -145,12 +142,8 @@ namespace Playdate
                     int message_receiver = (int)dataReader.GetValue(2);
                     DateTime message_timesent = (DateTime)dataReader.GetValue(3);
 
-                    Label l = new Label();
-
                     if (message_sender == senderID)
                     {
-                        //l.Text = "<br /><br />[" + senderPetname + "]: " + message_content + "&emsp;&emsp;" + message_timesent;
-                        //l.CssClass = "right_align";
                         var pic = "https://playdate.blob.core.windows.net/profilepictures/" + senderEmail + "+" + senderPetname + ".jpg";
                         MAINPANEL.InnerHtml += "<br /><div width=\"100%\" class = \"right_align\">[" + senderPetname + "]: " + message_content + "&emsp;&emsp;" + message_timesent + "<img class = \"chatlogo\" src=\"" + pic + "\" alt=\"Sender's Profile Pic\"></div>";
 
@@ -158,23 +151,12 @@ namespace Playdate
                     }
                     else
                     {
-                        //l.Text = "<br /><br /> [" + receiverPetname + "]: " + message_content + "&emsp;&emsp;" + message_timesent;
-                        //l.CssClass = "left_align";
                         var pic = "https://playdate.blob.core.windows.net/profilepictures/" + receiverEmail + "+" + receiverPetname + ".jpg"; ;
                         MAINPANEL.InnerHtml += "<br /><div width=\"100%\" class = \"left_align\"><img class = \"chatlogo\" src=\"" + pic + "\" alt=\"Receiver's Profile Pic\">[" + receiverPetname + "]: " + message_content + "&emsp;&emsp;" + message_timesent + "</div>";
-
                     }
-                    Debug.WriteLine("width: " + l.Width.ToString());
-                    Debug.WriteLine(l.CssClass.ToString());
 
-                    l.BorderColor = System.Drawing.Color.Red;
-
-                    Panel1.Controls.Add(l);
-
-                    chatHistory.Add(message_content);
                 }
                 Panel1.BorderColor = System.Drawing.Color.Black;
-                // Label1.Text = test;
 
                 sql.Dispose();
                 connection.Close();
@@ -305,8 +287,8 @@ namespace Playdate
         {
             //
             MailMessage mailmsg = new MailMessage(config["SendEmail:senderEmail"], receiverEmail);
-            mailmsg.Subject = "You received a message from " + receiverPetname + " from PlayDate!";
-            mailmsg.Body = receiverPetname + " messaged: \"" + body + "\".";
+            mailmsg.Subject = "You received a message from " + senderPetname + " from PlayDate!";
+            mailmsg.Body = senderPetname + " messaged: \"" + body + "\".";
             mailmsg.IsBodyHtml = true;
             mailmsg.Body += "<br>Log in to <a href=\"http://playdate4pets.azurewebsites.net/\">PlayDate</a> to reply!<br><br>-The PlayDate Team :)";
 

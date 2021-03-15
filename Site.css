@@ -60,7 +60,7 @@ textarea {
     /*background: #ffd36f;*/
 }
 .jumbotron {
-    background: lightgrey;
+    background: white;
     border-radius: 25px;
     padding: 20px;
 }
@@ -77,7 +77,8 @@ textarea {
     color: red;
     font-weight: bold;
 }
-.bannerpic{
+.bannerpic {
+    border-radius: 25px;
     width: 100%;
 }
 .LOGO {

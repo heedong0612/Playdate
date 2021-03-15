@@ -9,9 +9,9 @@
         <div class="chatpanel" id="MAINPANEL" runat="server"></div>
         <p>&nbsp;</p>
         <p>&nbsp;</p>
-        <asp:TextBox ID="MessageBox" runat="server" Height="28px" Width="1200px"></asp:TextBox>
+        <asp:TextBox ID="MessageBox" runat="server" Height="28px" Width="600px"></asp:TextBox>
 &nbsp;
-        &nbsp;<asp:Button ID="SendButton" runat="server" Height="34px" OnClick="SendButton_Click" Text="Send A Message!" Width="84px" />
+        &nbsp;<asp:Button ID="SendButton" runat="server" Height="34px" OnClick="SendButton_Click" Text="Send" Width="85px" />
     
     </div>
     
