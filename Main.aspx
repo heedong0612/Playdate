@@ -30,6 +30,8 @@
             </div>
             <div>
                 <asp:Image ID="Profile_Image" runat="server" Style="margin-left: auto; display: block;" ImageUrl="https://playdate.blob.core.windows.net/profilepictures/temp_profile_picture.jpg" Width="150" Height="105" />
+                <asp:Label ID="Label2" runat="server" Text="Note for CSS 436 classmates:" ForeColor="Red" Font-Bold="true"></asp:Label>
+                <asp:Label ID="Temp_Label" runat="server" Text="<br /> It will be more fun if you message the accounts that don't have [Fake account] tag in bio. Enjoy! :D - Donghee, Kaity & Jessica"></asp:Label>
                 <br />
                 <asp:Button class="signinbutton" ID="Profile_Button" runat="server" OnClick="Profile_Button_Click" Text="My Profile" Style="margin-left: auto; display: block;" />
                 <br />
