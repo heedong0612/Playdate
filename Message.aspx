@@ -18,7 +18,7 @@
     <h2>
     </h2>   
     <p>
-        <asp:Button  ID="Back_Button" runat="server" OnClick="Back_Button_Click" Text="Back to Inbox" />
+        <asp:Button  ID="Back_Button" runat="server" OnClick="Back_Button_Click" Text="Back" Font-Size="Large"/>
     </p>
     <p>&nbsp;</p>
 </asp:Content>

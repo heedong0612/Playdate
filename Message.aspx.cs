@@ -20,7 +20,7 @@ namespace Playdate
 
     {
         private string chatRoomID;
-
+        private string from_page = "Main";
         // DEBUG PURPOSE
         string senderEmail;
         string senderPetname;
@@ -48,6 +48,7 @@ namespace Playdate
             senderPetname = getPetName();
             receiverEmail = Request["receiverEmail"];
             receiverPetname = Request["receiverPetname"];
+            from_page = Request["from"];
             receiverName_label.Text = "&nbsp;&nbsp;" + receiverPetname + "<br >";
             displayPreviousMessages();
         }
@@ -154,11 +155,6 @@ namespace Playdate
             }
 
         }
-        protected void Back_Click(object sender, EventArgs e)
-        {
-            Response.Redirect("Inbox.aspx");
-        }
-
         private int getPersonID(string Email, string Petname)
         {
             // connect to sql db 
@@ -289,7 +285,14 @@ namespace Playdate
         }
         protected void Back_Button_Click(object sender, EventArgs e)
         {
-            Response.Redirect("Inbox.aspx");
+            if (from_page.Equals("Main"))
+            {
+                Response.Redirect("Main.aspx");
+            }
+            else
+            {
+                Response.Redirect("Inbox.aspx");
+            }
         }
 
     }

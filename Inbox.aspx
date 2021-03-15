@@ -43,7 +43,7 @@
         </asp:ListView>
         <asp:SqlDataSource ID="PlaydateDataSource" runat="server" ConnectionString="<%$ ConnectionStrings:PlaydateDBConnectionString %>">
         </asp:SqlDataSource>
-    <asp:Button ID="Back_Button" runat="server" OnClick="Back_Button_Click" Text="Back To Main" Height="32px" Width="125px" Font-Size="Large" />
+    <asp:Button ID="Back_Button" runat="server" OnClick="Back_Button_Click" Text="Back To Main" Height="32px" Width="125px" Font-Size="Large"/>
     </h2>
     <p>&nbsp;</p>
 

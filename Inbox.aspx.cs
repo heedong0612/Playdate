@@ -99,7 +99,7 @@ namespace Playdate
         {
             Button btn = (Button)sender;
             string[] receiverInfo = btn.CommandArgument.ToString().Split(new char[] { ',' });
-            Response.Redirect($"Message.aspx?receiverEmail={receiverInfo[0]}&receiverPetname={receiverInfo[1]}");
+            Response.Redirect($"Message.aspx?receiverEmail={receiverInfo[0]}&receiverPetname={receiverInfo[1]}&from=Inbox");
         }
 
         protected void Back_Button_Click(object sender, EventArgs e)
