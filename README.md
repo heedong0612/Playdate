@@ -7,11 +7,12 @@
 ![Welcoming Page](documents/StartingPage.jpg)
 
 ### Main Feed & Profile Page
-!(documents/Main_Prof.jpg)
+![](documents/Main_Prof.jpg)
 
 ### Inbox & Direct Message Page
+![](documents/Inbox.jpg)
 <img src="documents/merge2.png" alt="drawing" width="850"/>
-
+![](documents/message.jpg)
 
 ## Cloud Services Utilized
 **Azure App Serive** Incorporated Azure SQL DB to save and query previous messages. <br />Message page now can display old chats between the users. Inbox page now contains all the chat rooms that has been open.
