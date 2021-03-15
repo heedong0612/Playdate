@@ -20,8 +20,8 @@
             <br />
 
             <div class="checklist" style="float: left; width: 150px; font-size:medium;">
-                <asp:Label ID="Label1" runat="server" Text="Animal Types" Font-Bold="true" Font-Size="Large"></asp:Label>
-                <asp:CheckBoxList ID="CheckBoxList1" runat="server" OnSelectedIndexChanged="CheckBoxList1_SelectedIndexChanged1" AutoPostBack="True" Font-Bold="false" RepeatColumns="4" Width="500">
+                <asp:Label class="calibri" ID="Label1" runat="server" Text="Animal Types" Font-Bold="true" Font-Size="Large"></asp:Label>
+                <asp:CheckBoxList class="calibri" ID="CheckBoxList1" runat="server" OnSelectedIndexChanged="CheckBoxList1_SelectedIndexChanged1" AutoPostBack="True" Font-Bold="false" RepeatColumns="4" Width="500">
                     <asp:ListItem></asp:ListItem>
                     <asp:ListItem></asp:ListItem>
                     <asp:ListItem></asp:ListItem>
@@ -71,13 +71,13 @@
                                         <img style="float: left; vertical-align: middle;" src="https://playdate.blob.core.windows.net/profilepictures/<%#:Item.PicID%>"
                                             width="200" height="145" /></a>
 
-                                    <span style="vertical-align: top; padding-left: 15px">
+                                    <span style="vertical-align: top; padding-left: 15px; font-size:17px">
                                         <b><%#:Item.RowKey%></b><span style="color: darkgrey">&emsp;<i class="fas fa-map-marker-alt"></i>&nbsp; <%#:Item.City%>, <%#:Item.State%> 
                                            
                                     </span>
                                     
                                     <br /><br />
-                                    <div style="margin-right: auto; display: block; width: 1100px; padding-left: 215px; font-size:medium"><%#:Item.Bio%></div>
+                                    <div style="margin-right: auto; display: block; width: 1100px; padding-left: 215px; font-size:17px; font-family:Calibri"><%#:Item.Bio%></div>
                                      
                                     <asp:Button ID="Message_Button" runat="server" Style="margin-left: auto; text-align:right; display: block;" Text='<%#: "Message " + Item.RowKey%>' OnClick="Message_Button_Clicked" CommandArgument='<%#: Item.PartitionKey +","+ Item.RowKey%>' />
                                 </td>
