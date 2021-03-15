@@ -98,7 +98,9 @@ namespace Playdate
 
         protected void Message_Button_Clicked(object sender, EventArgs e)
         {
-
+            Button btn = (Button)sender;
+            string[] receiverInfo = btn.CommandArgument.ToString().Split(new char[] { ',' });
+            Response.Redirect($"Message.aspx?receiverEmail={receiverInfo[0]}&receiverPetname={receiverInfo[1]}");
         }
 
         private static string Format(string s)

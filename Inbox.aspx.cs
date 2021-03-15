@@ -32,6 +32,12 @@ namespace Playdate
 
         protected void Page_Load(object sender, EventArgs e)
         {
+            if (!Request.IsAuthenticated)
+            {
+                Response.Redirect("Default.aspx");
+                return;
+            }
+
             senderEmail = ClaimsPrincipal.Current.FindFirst("http://schemas.xmlsoap.org/ws/2005/05/identity/claims/emailaddress").Value;
             display_Inbox();
         }

@@ -36,23 +36,24 @@ namespace Playdate
         private static CloudTable tableClient;
         protected void Page_Load(object sender, EventArgs e)
         {
-            ConnectToTable();
-            senderEmail = ClaimsPrincipal.Current.FindFirst("http://schemas.xmlsoap.org/ws/2005/05/identity/claims/emailaddress").Value;
-            senderPetname = getPetName();
-            receiverEmail = Request["receiverEmail"];
-            receiverPetname = Request["receiverPetname"];
-            Debug.WriteLine("In Message");
-            Debug.WriteLine(receiverEmail);
-            Debug.WriteLine(receiverPetname);
-            Debug.WriteLine(senderEmail);
-            Debug.WriteLine(senderPetname);
-
             if (!Request.IsAuthenticated)
             {
                 Response.Redirect("Default.aspx");
                 return;
             }
-            
+
+            ConnectToTable();
+            senderEmail = ClaimsPrincipal.Current.FindFirst("http://schemas.xmlsoap.org/ws/2005/05/identity/claims/emailaddress").Value;
+            senderPetname = getPetName();
+            receiverEmail = Request["receiverEmail"];
+            receiverPetname = Request["receiverPetname"];
+
+            //Debug.WriteLine("In Message");
+            //Debug.WriteLine(receiverEmail);
+            //Debug.WriteLine(receiverPetname);
+            //Debug.WriteLine(senderEmail);
+            //Debug.WriteLine(senderPetname);
+
             displayPreviousMessages();
         }
 
