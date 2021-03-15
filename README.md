@@ -7,9 +7,10 @@
 <img src="documents/StartingPage.jpg" alt="drawing" width="750"/>
 
 ### Main Feed & Profile Page
-<img src="documents/merge1.png" alt="drawing" width="750"/>
+<img src="documents/merge1.png" alt="drawing" width="850"/>
+
 ### Inbox & Direct Message Page
-![Inbox and DM](documents/merge2.png)
+<img src="documents/merge2.png" alt="drawing" width="850"/>
 
 
 ## 3/13/2021
