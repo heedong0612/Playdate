@@ -11,14 +11,14 @@
         <p>&nbsp;</p>
         <asp:TextBox ID="MessageBox" runat="server" Height="28px" Width="1200px"></asp:TextBox>
 &nbsp;
-        &nbsp;<asp:Button ID="SendButton" runat="server" Height="34px" OnClick="SendButton_Click" Text="Send A Message!" Width="84px" />
+        &nbsp;<asp:Button Width="400px"  ID="SendButton" runat="server" Height="34px" OnClick="SendButton_Click" Text="Send A Message!"/>
     
     </div>
     
     <h2>
     </h2>   
     <p>
-        <asp:Button ID="Back_Button" runat="server" OnClick="Back_Button_Click" Text="Back to Inbox" />
+        <asp:Button  ID="Back_Button" runat="server" OnClick="Back_Button_Click" Text="Back to Inbox" />
     </p>
     <p>&nbsp;</p>
 </asp:Content>
