@@ -254,6 +254,9 @@ namespace Playdate
         //redirect to main
         protected void Main_Click(object sender, EventArgs e)
         {
+            // if age, Animal Type, City, or State is null in table, then don't let them out >:)
+
+            
             try
             {
                 Server.Transfer("Main.aspx");

@@ -26,13 +26,18 @@ Playdate is the biggest and flyest party in the world for pets — it’s about 
         </div>
         <hr />
         
+        
         <% if (!Request.IsAuthenticated)
             { %>
-        <h3 class="landingContainer2">
-            <asp:Button class="signinbutton" ID="SignIn" runat="server" Text="Sign In" OnClick="SignIn_Click" Height="42px" Width="107px" />
+        <h3 class="landingContainer2>
+            
+            <asp:Label ID="Label1" runat="server" Text="<b>Note: </b> If this is your first time visiting Playdate, <br />choose <i>Use another account</i> and <i>Create one!</i> upon clicking this button <br /> <br />" Font-Size="Medium" ForeColor="DarkGray" ></asp:Label>
+            <asp:Button class="signinbutton" ID="SignIn" runat="server" Text="Sign In or Sign Up" OnClick="SignIn_Click" ForeColor="Black" Height="42px" />
             &nbsp;<asp:Image class="MSLOGO" src="https://playdate.blob.core.windows.net/profilepictures/MS.png" runat="server" />
             &nbsp;<asp:Image class="GGLOGO" src="https://playdate.blob.core.windows.net/profilepictures/Google.png" runat="server" />
         </h3>
+        <h3 class="landingContainer2">
+            &nbsp;</h3>
         <% }
             else
             { %>
