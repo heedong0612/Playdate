@@ -30,9 +30,10 @@
                 </asp:CheckBoxList>
             </div>
             <div>
-                <asp:Image ID="Profile_Image" runat="server" Style="margin-left: auto; display: block;" ImageUrl="https://playdate.blob.core.windows.net/profilepictures/temp_profile_picture.jpg" Width="150" Height="150" />
+                <asp:Image ID="Profile_Image" runat="server" Style="margin-left: auto; display: block;" ImageUrl="https://playdate.blob.core.windows.net/profilepictures/temp_profile_picture.jpg" Width="150" Height="105" />
                 <br />
                 <asp:Button class="signinbutton" ID="Profile_Button" runat="server" OnClick="Profile_Button_Click" Text="My Profile" Style="margin-left: auto; display: block;" />
+                <br />
                 <asp:Button ID="SignOut_Button" runat="server" OnClick="SignOut_Button_Click" Text="Sign out" Style="margin-left: auto; display: block;" />
             </div>
 
@@ -73,7 +74,7 @@
 
                                     <div style="margin-right: auto; display: block; width: 950px; padding-left: 165px"><%#:Item.Bio%></div>
 
-                                    <asp:Button ID="Message_Button" runat="server" Style="margin-left: auto; display: block;" Text='<%#: "Message " + Item.RowKey%>' OnClick="Message_Button_Clicked" />
+                                    <asp:Button ID="Message_Button" runat="server" Style="margin-left: auto; display: block;" Text='<%#: "Message " + Item.RowKey%>' OnClick="Message_Button_Clicked" CommandArgument='<%#: Item.PartitionKey +","+ Item.RowKey%>' />
                                 </td>
 
                             </tr>

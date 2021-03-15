@@ -40,7 +40,6 @@
                     <td><asp:Label ID="Age" runat="server" Text="Age:"></asp:Label></td>
                     <td> <asp:TextBox ID="AgeTextBox" runat="server"></asp:TextBox></td>
                 </tr>
-
                  <tr>
                      <td>
                          <asp:Label ID="Animal" runat="server" Text="Animal Type:"></asp:Label>

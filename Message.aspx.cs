@@ -7,6 +7,7 @@ using System.Data.SqlClient;
 using System.Diagnostics;
 using System.Data;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Azure.Cosmos.Table;
 using System.IO;
 using System.Web.UI.WebControls;
 using Microsoft.Azure.NotificationHubs;
@@ -17,6 +18,7 @@ using System.Threading.Tasks;
 using System.Configuration;
 using System.Security.Claims;
 using Microsoft.Azure.Cosmos.Table;
+using System.Security.Claims;
 
 namespace Playdate
 {
@@ -27,12 +29,12 @@ namespace Playdate
         private string chatRoomID;
 
         // DEBUG PURPOSE
-        string senderEmail = "Heedong@uw.edu";
-        string senderPetname = "Umu";
+        string senderEmail;
+        string senderPetname;
 
-        string receiverEmail = "Kaitcolbert@hotmail.com";// "Jessica.nguyen0107@gmail.com"; // "Kaitcolbert@hotmail.com";
-        string receiverPetname = "HamBoy"; // "Puppy"; 
-
+        string receiverEmail; 
+        string receiverPetname;
+        
         static IConfigurationRoot GetConfiguration()
             => new ConfigurationBuilder()
             .SetBasePath(Directory.GetParent(AppContext.BaseDirectory).FullName)
@@ -49,8 +51,62 @@ namespace Playdate
                 return;
             }
 
+            ConnectToTable();
+            senderEmail = ClaimsPrincipal.Current.FindFirst("http://schemas.xmlsoap.org/ws/2005/05/identity/claims/emailaddress").Value;
+            senderPetname = getPetName();
+            receiverEmail = Request["receiverEmail"];
+            receiverPetname = Request["receiverPetname"];
+
+            //Debug.WriteLine("In Message");
+            //Debug.WriteLine(receiverEmail);
+            //Debug.WriteLine(receiverPetname);
+            //Debug.WriteLine(senderEmail);
+            //Debug.WriteLine(senderPetname);
+
             displayPreviousMessages();
         }
+
+        private void ConnectToTable()
+        {
+            try
+            {
+                //Label2.Text = "";
+                var storageAccount = Microsoft.Azure.Cosmos.Table.CloudStorageAccount.Parse(config["AzureStorage:ConnectionString"]);
+
+                var _tableClient = storageAccount.CreateCloudTableClient();
+
+                tableClient = _tableClient.GetTableReference(config["AzureStorage:Table"]);
+            }
+            catch (Exception e)
+            {
+                // Label2.Text = "ERROR: " + e.Message;
+            }
+        }
+        private static string Format(string s)
+        {
+            if (string.IsNullOrWhiteSpace(s))
+            {
+                return "";
+            }
+            s = s.ToLower();
+            s = s[0].ToString().ToUpper() + s.Substring(1);
+            return s;
+        }
+        public string getPetName()
+        {
+            try
+            {
+                TableQuery userEntry = new TableQuery().Where(TableQuery.GenerateFilterCondition("PartitionKey", QueryComparisons.Equal, Format(senderEmail)));
+                var retrievedResult = tableClient.ExecuteQuery(userEntry);
+                return retrievedResult.ElementAt(0).RowKey;
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine(ex.ToString());
+            }
+            return "";
+        }
+
         private void displayPreviousMessages()
         {
             // get Person ID from Person Table
