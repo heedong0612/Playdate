@@ -1,4 +1,4 @@
-﻿<%@ Page Title="Ugly Main Feed (help)" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="Main.aspx.cs" Inherits="Playdate.Main" %>
+﻿<%@ Page Title="Playdate" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="Main.aspx.cs" Inherits="Playdate.Main" %>
 
 
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">

@@ -71,6 +71,7 @@ namespace Playdate
             }
             ConnectToTable();
             email = ClaimsPrincipal.Current.FindFirst("http://schemas.xmlsoap.org/ws/2005/05/identity/claims/emailaddress").Value;
+            
             string name = getPetName(email);
             TableOperation retrieveOperation = TableOperation.Retrieve(Format(email), Format(name));
             DynamicTableEntity pet = (DynamicTableEntity) table.Execute(retrieveOperation).Result;
@@ -84,6 +85,7 @@ namespace Playdate
                         break;
                     }
                 }
+                Profile_Image.ImageUrl = "https://playdate.blob.core.windows.net/profilepictures/temp_profile_picture.jpg";
             }            
 
             for (int i = 0; i < AnimalTypes.Count; i++)  {
