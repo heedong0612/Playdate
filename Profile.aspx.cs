@@ -85,9 +85,13 @@ namespace Playdate
 
                 if (!string.IsNullOrWhiteSpace(name))
                 {
+                    
                     NameTextBox.Text = name + "<br>";
                     Home.Visible = true;
-                    Load_Profile(Format(getEmail()), Format(name));
+                    if (!IsPostBack)
+                    {
+                        Load_Profile(Format(getEmail()), Format(name));
+                    }
                 }
                 else
                 {
