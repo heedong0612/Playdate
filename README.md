@@ -7,7 +7,7 @@
 ![Welcoming Page](documents/StartingPage.jpg)
 
 ### Main Feed & Profile Page
-![](documents/Main_Prof.jpg)
+![](documents/Main_Prof.png)
 
 ### Inbox
 ![](documents/Inbox.jpg)
