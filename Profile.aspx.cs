@@ -130,7 +130,7 @@ namespace Playdate
 
                 if (n < 0)
                 {
-                    Label2.Text += "ERROR: Please enter only numbers more than 0 for age. <br>";
+                    Label2.Text += "ERROR: Please enter a valid age. <br>";
                     return;
                 }
 
@@ -142,7 +142,7 @@ namespace Playdate
 
                 if (!VerifyBio(BioTextBox.Text))
                 {
-                    Label2.Text += "ERROR: Please enter 20 words or lower for Bio. <br>";
+                    Label2.Text += "ERROR: Please enter 20 words or less for Bio. <br>";
                     return;
                 }
 
@@ -163,11 +163,14 @@ namespace Playdate
                 {
                     Label2.Text += "ERROR: Unable to create account. Please try again. <br>";
                     return;
+                } else
+                {
+                    Label2.Text = "Account Profile Updated!";
                 }
             }
             catch (Exception ex)
             {
-                Label2.Text = "ERROR: " + ex.Message;
+                Label2.Text += "ERROR: " + ex.Message;
             }
 
             Label2.Text = "Account Updated!";
@@ -246,6 +249,7 @@ namespace Playdate
             catch (Exception e)
             {
                 Label2.Text = "ERROR: " + e.Message;
+                return false;
             }
             return true;
         }

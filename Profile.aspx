@@ -111,7 +111,6 @@
             <br />
 
             <div class="savebutton">
-                <asp:Button ID="Save" runat="server" Text="Save" OnClick="Save_Click" />
             </div>
             <br />
 
@@ -127,8 +126,12 @@
 
             <br />
 
-            <img class="HomePic" src="https://playdate.blob.core.windows.net/profilepictures/HOME.png" runat="server" />
-            <asp:Button class="signinbutton" ID="Home" runat="server" Text="Back To Main" OnClick="Main_Click" />
+            <img class="HomePic" src="https://playdate.blob.core.windows.net/profilepictures/HOME.png" runat="server" />&nbsp;&nbsp;
+            <asp:Button class="signinbutton" ID="Home" runat="server" Text="Back To Main" OnClick="Main_Click" Height="40px" Width="146px" />
+
+
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <asp:Button ID="Save" runat="server" Text="Save" OnClick="Save_Click" Height="40px" Width="103px" />
 
 
         </div>

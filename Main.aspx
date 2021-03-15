@@ -33,9 +33,9 @@
                 <asp:Label ID="Label2" runat="server" Text="Note for CSS 436 classmates:" ForeColor="Red" Font-Bold="true"></asp:Label>
                 <asp:Label ID="Temp_Label" runat="server" Text="<br /> It will be more fun if you message the accounts that don't have [Fake account] tag in bio. Enjoy! :D - Donghee, Kaity & Jessica"></asp:Label>
                 <br />
-                <asp:Button class="signinbutton" ID="Profile_Button" runat="server" OnClick="Profile_Button_Click" Text="My Profile" Style="margin-left: auto; display: block;" />
+                <asp:Button class="signinbutton" ID="Profile_Button" runat="server" OnClick="Profile_Button_Click" Text="My Profile" Style="margin-left: auto; display: block;" Height="34px" Width="95px" />
                 <br />
-                <asp:Button ID="SignOut_Button" runat="server" OnClick="SignOut_Button_Click" Text="Sign out" Style="margin-left: auto; display: block;" />
+                <asp:Button ID="SignOut_Button" runat="server" OnClick="SignOut_Button_Click" Text="Sign out" Style="margin-left: auto; display: block;" Height="33px" Width="95px" />
             </div>
 
 
