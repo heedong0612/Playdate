@@ -18,7 +18,6 @@ namespace Playdate
     {
         // DEBUG PURPOSE
         private string senderEmail;
-        //private string senderPetname;
         private static CloudTable table;
 
 
@@ -63,12 +62,13 @@ namespace Playdate
                 builder.InitialCatalog = config.GetValue<string>("PlaydateDB:Catalog");
 
                 SqlConnection connection = new SqlConnection(builder.ConnectionString);
-                String sqlQuery = "select (select PetName from Person where PersonID = ReceiverID) as 'PetName', Content from Chat where senderId in (select senderID from Person where Email=@Email) AND timesent IN (select max(timesent) as latest_timesent from Chat where senderID in (select senderID from Person where Email=@Email) group by chatroomID)";
+                string sqlQuery = "select Content, (select Email from Person where PersonID = receiverID) as ReceiverEmail, (select Petname from Person where PersonID = receiverID) as PetName from[dbo].[Chat] as main right join (select chatRoomID, max(timesent) as ts from[dbo].[Chat] where senderID in (select PersonID from[dbo].[Person] where Email = '"+getEmail()+"') or receiverID in (select PersonID from[dbo].[Person] where Email = '"+getEmail()+"') group by ChatRoomID, senderID, receiverID) subq on main.chatroomID = subq.chatroomID and main.timesent = subq.ts";
 
                 connection.Open();
                 SqlCommand sql = new SqlCommand(sqlQuery, connection);
-                sql.Parameters.Add("@Email", SqlDbType.VarChar).Value = getEmail();
-                sql.Parameters.Add("@Pet", SqlDbType.VarChar).Value = getPet();
+                sql.Parameters.AddWithValue("Email", getEmail());
+                sql.Parameters.AddWithValue("Pet", getPet());
+                PlaydateDataSource.SelectCommand = sqlQuery;
 
                 SqlDataReader dataReader = sql.ExecuteReader();
                 
