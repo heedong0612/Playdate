@@ -7,7 +7,7 @@
 ![Welcoming Page](documents/StartingPage.jpg)
 
 ### Main Feed & Profile Page
-<img src="documents/merge1.png" alt="drawing" width="850"/>
+!(documents/Main_Prof.jpg)
 
 ### Inbox & Direct Message Page
 <img src="documents/merge2.png" alt="drawing" width="850"/>
