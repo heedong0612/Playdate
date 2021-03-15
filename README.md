@@ -4,7 +4,7 @@
 #### ID:  *playdate4tests@gmail.com* <br />PWD: *playdate1234*
 
 ### Welcoming Page
-![Welcoming Page](documents/StartingPage.png)
+![Welcoming Page](documents/StartingPage.jpg)
 
 ### Main Feed & Profile Page
 ![Main and Profile](documents/merge1.png)
