@@ -3,6 +3,16 @@
 **NOTE: If you want to look around the website without creating an account, use this test acount!** 
 #### ID:  *playdate4tests@gmail.com* <br />PWD: *playdate1234*
 
+### Welcoming Page
+![Welcoming Page](Documents/StartingPage.png)
+
+### Main Feed & Profile Page
+![Main and Profile](Documents/merge1.png)
+
+### Inbox & Direct Message Page
+![Inbox and DM](Documents/merge2.png)
+
+
 ## 3/13/2021
 
 **Added** Incorporated Azure SQL DB to save and query previous messages. <br />Message page now can display old chats between the users. Inbox page now contains all the chat rooms that has been open.
