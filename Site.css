@@ -64,13 +64,24 @@ textarea {
     border-radius: 25px;
     padding: 20px;
 }
+.landingContainer {
+    width: 75%;
+    margin: auto;
+}
+.landingContainer2 {
+   width: 68%;
+   text-align:right;
+    margin-left: auto;
+}
 /*.checklist{
     padding: 20px;
     width: 300%;
     border: 2px solid lightgrey;
 }*/
 .applabel {
-    font-family: 'Pacifico', cursive;
+    font-family:Calibri;
+    font-size:30px;
+    /*font-family: 'Pacifico', cursive;*/
     text-align: center;
 }
 .error {
@@ -79,7 +90,10 @@ textarea {
 }
 .bannerpic {
     border-radius: 25px;
-    width: 100%;
+    width: 75%;
+    margin-left:auto;
+    margin-right:auto;
+    display:block;
 }
 .LOGO {
     object-fit: cover;
@@ -101,7 +115,7 @@ textarea {
     height: 50px;
 }
 .nametext{
-    border: 2px solid black;
+    
 }
 .MSLOGO {
     width: 40px;

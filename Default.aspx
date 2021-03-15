@@ -9,9 +9,8 @@
     <script src='https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js'></script>
 
     <div class="body">
-
-        <img class="LOGOPIC" src="https://playdate.blob.core.windows.net/profilepictures/LOGO.png" runat="server" />
         <br />
+        <img class="LOGOPIC" src="https://playdate.blob.core.windows.net/profilepictures/LOGO.png" runat="server" />
         <div class="applabel">
             <asp:Label class="AppName" runat="server" Text="PLAYDATE"></asp:Label>
         </div>
@@ -29,8 +28,8 @@ Playdate is the biggest and flyest party in the world for pets — it’s about 
         
         <% if (!Request.IsAuthenticated)
             { %>
-        <h3>
-            <asp:Button class="signinbutton" ID="SignIn" runat="server" Text="Sign In" OnClick="SignIn_Click" />
+        <h3 class="landingContainer2">
+            <asp:Button class="signinbutton" ID="SignIn" runat="server" Text="Sign In" OnClick="SignIn_Click" Height="42px" Width="107px" />
             &nbsp;<asp:Image class="MSLOGO" src="https://playdate.blob.core.windows.net/profilepictures/MS.png" runat="server" />
             &nbsp;<asp:Image class="GGLOGO" src="https://playdate.blob.core.windows.net/profilepictures/Google.png" runat="server" />
         </h3>
