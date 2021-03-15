@@ -5,6 +5,7 @@
 
 ### Welcoming Page
 ![Welcoming Page](documents/StartingPage.jpg =250x)
+<img src="documents/StartingPage.jpg" alt="drawing" width="200"/>
 
 ### Main Feed & Profile Page
 ![Main and Profile](documents/merge1.png)
