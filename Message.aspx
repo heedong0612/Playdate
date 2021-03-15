@@ -12,7 +12,7 @@
         <asp:TextBox ID="MessageBox" runat="server" Height="28px" Width="600px"></asp:TextBox>
 &nbsp;
         &nbsp;<asp:Button ID="SendButton" runat="server" Height="34px" OnClick="SendButton_Click" Text="Send" Width="85px" />
-    
+
     </div>
     
     <h2>
