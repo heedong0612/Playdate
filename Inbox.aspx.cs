@@ -62,28 +62,29 @@ namespace Playdate
                 builder.InitialCatalog = config.GetValue<string>("PlaydateDB:Catalog");
 
                 SqlConnection connection = new SqlConnection(builder.ConnectionString);
-                string sqlQuery = "select Content, (select Email from Person where PersonID = receiverID) as ReceiverEmail, (select Petname from Person where PersonID = receiverID) as PetName from[dbo].[Chat] as main right join (select chatRoomID, max(timesent) as ts from[dbo].[Chat] where senderID in (select PersonID from[dbo].[Person] where Email = '"+getEmail()+"') or receiverID in (select PersonID from[dbo].[Person] where Email = '"+getEmail()+"') group by ChatRoomID, senderID, receiverID) subq on main.chatroomID = subq.chatroomID and main.timesent = subq.ts";
+                string sqlQuery = "select Content, (select Email from Person where PersonID = receiverID) as ReceiverEmail, (select Petname from Person where PersonID = receiverID) as RecevierPetname, (select Email from Person where PersonID = senderID) as SenderEmail, (select Petname from Person where PersonID = senderID) as SenderPetname from[dbo].[Chat] as main right join (select chatRoomID, max(timesent) as ts from[dbo].[Chat] where senderID in (select PersonID from[dbo].[Person] where Email = '"+getEmail()+"') or receiverID in (select PersonID from[dbo].[Person] where Email = '"+getEmail()+"') group by ChatRoomID, senderID, receiverID) subq on main.chatroomID = subq.chatroomID and main.timesent = subq.ts";
 
                 connection.Open();
                 SqlCommand sql = new SqlCommand(sqlQuery, connection);
-                sql.Parameters.AddWithValue("Email", getEmail());
-                sql.Parameters.AddWithValue("Pet", getPet());
                 PlaydateDataSource.SelectCommand = sqlQuery;
 
                 SqlDataReader dataReader = sql.ExecuteReader();
                 
                 string test = "";
-                string receiverName;
-                string lastMessage;
 
                 while (dataReader.Read())
                 {              
                     if (dataReader.GetValue(0) != System.DBNull.Value)
                     {
-
-                        receiverName = (string)dataReader.GetValue(0);
-                        lastMessage = (string)dataReader.GetValue(1);
-                        test += "<br /><br />" + receiverName + "<br />" + lastMessage;
+                        var lastMessage = dataReader.GetValue(0);
+                        var receiverEmail = dataReader.GetValue(1);
+                        var petName = dataReader.GetValue(2);
+                        if (receiverEmail == senderEmail)
+                        {
+                            petName = dataReader.GetValue(4);
+                        }
+                        Debug.WriteLine(petName);
+                        test += "<br /><br />" + petName + "<br />" + lastMessage;
                     } 
                 }
                 
