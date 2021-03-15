@@ -48,7 +48,7 @@ namespace Playdate
             senderPetname = getPetName();
             receiverEmail = Request["receiverEmail"];
             receiverPetname = Request["receiverPetname"];
-
+            receiverName_label.Text = "&nbsp;&nbsp;" + receiverPetname + "<br >";
             displayPreviousMessages();
         }
 

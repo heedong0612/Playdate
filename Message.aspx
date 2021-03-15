@@ -1,7 +1,7 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="Message.aspx.cs" Inherits="Playdate.Message" %>
 
 <asp:Content ID="BodyContent" ContentPlaceHolderID="MainContent" runat="server">
-    <h2>Message</h2>
+    <h2 class="PLAYDATE"> <asp:Label ID="receiverName_label" Text="" runat="server"> </asp:Label> </h2>
     <p></p>
     <div style="width: 1200px; display:block">
         <asp:Panel ID="Panel1" runat="server">

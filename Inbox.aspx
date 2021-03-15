@@ -1,9 +1,10 @@
 ﻿<%@ Page Title=" " Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="Inbox.aspx.cs" Inherits="Playdate.Inbox" %>
 
 <asp:Content ID="BodyContent" ContentPlaceHolderID="MainContent" runat="server">
+    <h2 class="PLAYDATE">
+        Messages </h2>
     <h2>
-        &nbsp;</h2>
-<h2>
+    <br />
         <asp:ListView ID="ListView1" runat="server" DataSourceID="PlaydateDataSource" OnSelectedIndexChanged="ListView1_SelectedIndexChanged" style="font-size: small">
             
             <ItemTemplate>

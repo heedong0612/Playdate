@@ -16,7 +16,7 @@
         </div>
         <br />
         <div class="jumbotron">
-            <h1 class="landingContainer">Hello, friends!</h1>
+          
             <img src="https://playdate.blob.core.windows.net/profilepictures/mainImg.jpg" class="d-block w-100 bannerpic" alt="mainpic">
             <p class="landingContainer">
                 Message. Chat. Playdate. It’s easy and fun to find other pet friends on Playdate. Make your pet's profile stand out with your best pic of them and a little something about them to share the happiness. Once messaged, you will be able to connect with other pets all around the States for a fun day playday!

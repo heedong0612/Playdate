@@ -32,17 +32,14 @@
             }
         }
     </script>
-    <h2>Profile Page</h2>
+    <h2 class="PLAYDATE">Profile</h2>
     <div class="body">
 
         <div class="container">
 
-            <img class="LOGO" src="https://playdate.blob.core.windows.net/profilepictures/LOGO.png" runat="server" />
+            <%--  <img class="LOGO" src="https://playdate.blob.core.windows.net/profilepictures/LOGO.png" runat="server" /> --%>
             <br />
-            <asp:Label class="applabel" ID="AppName" runat="server" Text="PLAYDATE"></asp:Label>
-
             <hr />
-            <br />
             <br />
 
             <div class="petnameContainer">
@@ -53,13 +50,13 @@
             <br />
 
             <table>
-                <tr>
+                <tr class="spaceUnder">
                     <td>
                         <asp:Label ID="Age" runat="server" Text="Age:"></asp:Label></td>
                     <td>
                         <asp:TextBox ID="AgeTextBox" runat="server"></asp:TextBox></td>
                 </tr>
-                <tr>
+                <tr class="spaceUnder">
                     <td>
                         <asp:Label ID="Animal" runat="server" Text="Animal Type:"></asp:Label>
                     </td>
@@ -67,7 +64,7 @@
                         <asp:TextBox ID="AnimalTextBox" runat="server"></asp:TextBox>
                     </td>
                 </tr>
-                <tr>
+                <tr class="spaceUnder">
                     <td>
                         <asp:Label ID="City" runat="server" Text="City:"></asp:Label>
                     </td>
@@ -75,7 +72,7 @@
                         <asp:TextBox ID="CityTextBox" runat="server"></asp:TextBox>
                     </td>
                 </tr>
-                <tr>
+                <tr class="spaceUnder">
                     <td>
                         <asp:Label ID="State" runat="server" Text="State:"></asp:Label>
                     </td>
@@ -121,9 +118,6 @@
 
 
             <br />
-            <br />
-
-
             <br />
 
             <img class="HomePic" src="https://playdate.blob.core.windows.net/profilepictures/HOME.png" runat="server" />&nbsp;&nbsp;

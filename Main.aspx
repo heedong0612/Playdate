@@ -12,12 +12,15 @@
         <div class="body">
             <script src="https://kit.fontawesome.com/962ba28c29.js"></script>
             <hgroup>
-                <h2><%: Title %></h2>
+                <h2 class="PLAYDATE">
+                    <asp:Label ID="playdate_label" runat="server" Text="Playdate"></asp:Label>
+                    
+                </h2>
             </hgroup>
             <br />
 
-            <div class="checklist" style="float: left; width: 150px">
-                &emsp;<asp:Label ID="Label1" runat="server" Text="Animal Types" Font-Bold="true"></asp:Label>
+            <div class="checklist" style="float: left; width: 150px; font-size:medium;">
+                <asp:Label ID="Label1" runat="server" Text="Animal Types" Font-Bold="true" Font-Size="Large"></asp:Label>
                 <asp:CheckBoxList ID="CheckBoxList1" runat="server" OnSelectedIndexChanged="CheckBoxList1_SelectedIndexChanged1" AutoPostBack="True" Font-Bold="false" RepeatColumns="4" Width="500">
                     <asp:ListItem></asp:ListItem>
                     <asp:ListItem></asp:ListItem>
@@ -30,7 +33,7 @@
             </div>
             <div>
                 <asp:Image ID="Profile_Image" runat="server" Style="margin-left: auto; display: block;" ImageUrl="https://playdate.blob.core.windows.net/profilepictures/temp_profile_picture.jpg" Width="170" Height="120"/>
-                <asp:Label ID="Label2" runat="server" Text="Note for CSS 436 classmates:" ForeColor="Purple" Font-Bold="true"></asp:Label>
+                <asp:Label ID="Label2" runat="server" Text="Note for CSS 436 classmates:" ForeColor="#fdb65c" Font-Bold="true"></asp:Label>
                 <asp:Label ID="Temp_Label" runat="server" Text="<br /> It will be more fun if you message the accounts that don't have [Fake account] tag in bio. Enjoy! :D - Donghee, Kaity & Jessica"></asp:Label>
                 <br />
                 <asp:Button class="signinbutton" ID="Profile_Button" runat="server" OnClick="Profile_Button_Click" Text="My Profile" Style="margin-left: auto; display: block;" Height="34px" Width="95px" />
@@ -73,8 +76,8 @@
                                            
                                     </span>
                                     
-                                    <br />
-                                    <div style="margin-right: auto; display: block; width: 1100px; padding-left: 215px"><%#:Item.Bio%></div>
+                                    <br /><br />
+                                    <div style="margin-right: auto; display: block; width: 1100px; padding-left: 215px; font-size:medium"><%#:Item.Bio%></div>
                                      
                                     <asp:Button ID="Message_Button" runat="server" Style="margin-left: auto; text-align:right; display: block;" Text='<%#: "Message " + Item.RowKey%>' OnClick="Message_Button_Clicked" CommandArgument='<%#: Item.PartitionKey +","+ Item.RowKey%>' />
                                 </td>
