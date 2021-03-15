@@ -6,8 +6,11 @@
 ### Welcoming Page
 ![Welcoming Page](documents/StartingPage.jpg)
 
-### Main Feed & Profile Page
-![](documents/Main_Prof.png)
+### Main Feed
+![](documents/main.jpg)
+
+### Profile Page
+![](documents/Profile.jpg)
 
 ### Inbox
 ![](documents/Inbox.jpg)
