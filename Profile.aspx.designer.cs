@@ -7,13 +7,11 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Playdate
-{
-
-
-    public partial class Profile
-    {
-
+namespace Playdate {
+    
+    
+    public partial class Profile {
+        
         /// <summary>
         /// AppName control.
         /// </summary>
@@ -22,7 +20,7 @@ namespace Playdate
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label AppName;
-
+        
         /// <summary>
         /// NameTextBox control.
         /// </summary>
@@ -31,7 +29,7 @@ namespace Playdate
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label NameTextBox;
-
+        
         /// <summary>
         /// Age control.
         /// </summary>
@@ -40,7 +38,7 @@ namespace Playdate
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label Age;
-
+        
         /// <summary>
         /// AgeTextBox control.
         /// </summary>
@@ -49,7 +47,7 @@ namespace Playdate
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox AgeTextBox;
-
+        
         /// <summary>
         /// Animal control.
         /// </summary>
@@ -58,7 +56,7 @@ namespace Playdate
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label Animal;
-
+        
         /// <summary>
         /// AnimalTextBox control.
         /// </summary>
@@ -67,7 +65,7 @@ namespace Playdate
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox AnimalTextBox;
-
+        
         /// <summary>
         /// City control.
         /// </summary>
@@ -76,7 +74,7 @@ namespace Playdate
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label City;
-
+        
         /// <summary>
         /// CityTextBox control.
         /// </summary>
@@ -85,7 +83,7 @@ namespace Playdate
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox CityTextBox;
-
+        
         /// <summary>
         /// State control.
         /// </summary>
@@ -94,7 +92,7 @@ namespace Playdate
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label State;
-
+        
         /// <summary>
         /// StateTextBox control.
         /// </summary>
@@ -103,7 +101,7 @@ namespace Playdate
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox StateTextBox;
-
+        
         /// <summary>
         /// Bio control.
         /// </summary>
@@ -112,7 +110,7 @@ namespace Playdate
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label Bio;
-
+        
         /// <summary>
         /// BioTextBox control.
         /// </summary>
@@ -121,7 +119,7 @@ namespace Playdate
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox BioTextBox;
-
+        
         /// <summary>
         /// Limit control.
         /// </summary>
@@ -130,7 +128,7 @@ namespace Playdate
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label Limit;
-
+        
         /// <summary>
         /// PhotoUpload control.
         /// </summary>
@@ -139,7 +137,16 @@ namespace Playdate
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.FileUpload PhotoUpload;
-
+        
+        /// <summary>
+        /// ProfilePic control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlImage ProfilePic;
+        
         /// <summary>
         /// Label1 control.
         /// </summary>
@@ -148,7 +155,7 @@ namespace Playdate
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label Label1;
-
+        
         /// <summary>
         /// Save control.
         /// </summary>
@@ -157,7 +164,7 @@ namespace Playdate
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button Save;
-
+        
         /// <summary>
         /// Label2 control.
         /// </summary>
@@ -166,7 +173,7 @@ namespace Playdate
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label Label2;
-
+        
         /// <summary>
         /// Home control.
         /// </summary>
