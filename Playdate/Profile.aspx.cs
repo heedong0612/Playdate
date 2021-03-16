@@ -87,7 +87,7 @@ namespace Playdate
 
                 if (!string.IsNullOrWhiteSpace(name))
                 {
-                    
+
                     NameTextBox.Text = name;
                     Home.Visible = true;
                     if (!IsPostBack)
@@ -149,9 +149,14 @@ namespace Playdate
                 }
 
 
-                picID = Format(getEmail()) + "+" + Format(getPetName()) + ".jpg"; //TO BE OBTAINED FROM AUTHENTICATION
-                                                                                  //Format(EmailTextBox.Text) + "+" + Format(NameTextBox.Text) + ".jpg";
-                UploadPic(picID);
+                //picID = Format(getEmail()) + "+" + Format(getPetName()) + ".jpg"; //TO BE OBTAINED FROM AUTHENTICATION
+                //Format(EmailTextBox.Text) + "+" + Format(NameTextBox.Text) + ".jpg";
+                if (PhotoUpload.HasFile)
+                {
+                    picID = Format(getEmail()) + "+" + Format(getPetName()) + ".jpg";
+                    UploadPic();
+                }
+                
 
                 Pet p = new Pet(
                     Format(getEmail()), Format(getPetName()), Format(AgeTextBox.Text), Format(AnimalTextBox.Text), Format(CityTextBox.Text), Format(StateTextBox.Text),
@@ -161,7 +166,8 @@ namespace Playdate
                 {
                     Label2.Text += "ERROR: Unable to create account. Please try again. <br>";
                     return;
-                } else
+                }
+                else
                 {
                     Label2.Text = "Account Profile Updated!";
                 }
@@ -257,14 +263,14 @@ namespace Playdate
         {
             // if age, Animal Type, City, or State is null in table, then don't let them out >:)
 
-            
+
             try
             {
                 TableQuery<Pet> q = new TableQuery<Pet>().Where(TableQuery.GenerateFilterCondition("PartitionKey", QueryComparisons.Equal, (Format(getEmail()))));
                 var itemlist = tableClient.ExecuteQuery(q);
                 foreach (Pet p in itemlist)
                 {
-                    if(string.IsNullOrEmpty(p.City) || string.IsNullOrEmpty(p.State))
+                    if (string.IsNullOrEmpty(p.City) || string.IsNullOrEmpty(p.State))
                     {
                         Label2.Text = "ERROR: You have to fill out City and State fields";
                         return;
@@ -289,7 +295,7 @@ namespace Playdate
         {
             //TableOperation retrieveOperation = TableOperation.Retrieve(Format(email), Format(name));
             //DynamicTableEntity pet = (DynamicTableEntity)tableClient.Execute(retrieveOperation).Result;
-            TableQuery<Pet> q = new TableQuery<Pet>().Where(TableQuery.GenerateFilterCondition("PartitionKey", QueryComparisons.Equal,(Format(getEmail())))); //
+            TableQuery<Pet> q = new TableQuery<Pet>().Where(TableQuery.GenerateFilterCondition("PartitionKey", QueryComparisons.Equal, (Format(getEmail())))); //
             var itemlist = tableClient.ExecuteQuery(q);
             foreach (Pet p in itemlist)
             {
@@ -335,39 +341,34 @@ namespace Playdate
 
         /* reads in picture user uploaded from their file and upload to blob with their email+petname as key
          */
-        private void UploadPic(string picID)
+        private void UploadPic()
         {
-            if (PhotoUpload.HasFile)
+
+            try
             {
-                try
-                {
+                Stream photoStream = PhotoUpload.PostedFile.InputStream;
+                int photoLength = PhotoUpload.PostedFile.ContentLength;
+                string photoMime = PhotoUpload.PostedFile.ContentType;
+                string photoName = Path.GetFileName(PhotoUpload.PostedFile.FileName);
+                byte[] photoData = new byte[photoLength];
+                photoStream.Read(photoData, 0, photoLength);
 
+                var StorageAccount = Microsoft.WindowsAzure.Storage.CloudStorageAccount.Parse(config["AzureStorage:ConnectionString"]);
+                var BlobClient = StorageAccount.CreateCloudBlobClient();
+                var Container = BlobClient.GetContainerReference(config["AzureStorage:Container"]);
+                Container.CreateIfNotExists();
 
+                var BlobBlock = Container.GetBlockBlobReference(picID);
+                BlobBlock.Properties.ContentType = "image/jpg";
+                var fileContent = photoData;
+                BlobBlock.UploadFromByteArray(fileContent, 0, fileContent.Length);
 
-                    Stream photoStream = PhotoUpload.PostedFile.InputStream;
-                    int photoLength = PhotoUpload.PostedFile.ContentLength;
-                    string photoMime = PhotoUpload.PostedFile.ContentType;
-                    string photoName = Path.GetFileName(PhotoUpload.PostedFile.FileName);
-                    byte[] photoData = new byte[photoLength];
-                    photoStream.Read(photoData, 0, photoLength);
+            }
+            catch (Exception ex)
+            {
+                Label2.Text = "ERROR: " + ex.Message;
+                Label2.Text += "<br>ERROR: Unable to upload profile picture. Please try again.";
 
-                    var StorageAccount = Microsoft.WindowsAzure.Storage.CloudStorageAccount.Parse(config["AzureStorage:ConnectionString"]);
-                    var BlobClient = StorageAccount.CreateCloudBlobClient();
-                    var Container = BlobClient.GetContainerReference(config["AzureStorage:Container"]);
-                    Container.CreateIfNotExists();
-
-                    var BlobBlock = Container.GetBlockBlobReference(picID);
-                    BlobBlock.Properties.ContentType = "image/jpg";
-                    var fileContent = photoData;
-                    BlobBlock.UploadFromByteArray(fileContent, 0, fileContent.Length);
-
-                }
-                catch (Exception ex)
-                {
-                    Label2.Text = "ERROR: " + ex.Message;
-                    Label2.Text += "<br>ERROR: Unable to upload profile picture. Please try again.";
-
-                }
             }
         }
     }
