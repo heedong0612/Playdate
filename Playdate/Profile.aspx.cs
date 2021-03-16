@@ -84,9 +84,10 @@ namespace Playdate
                 string name = getPetName();
 
 
+
                 if (!string.IsNullOrWhiteSpace(name))
                 {
-                    
+
                     NameTextBox.Text = name;
                     Home.Visible = true;
                     if (!IsPostBack)
@@ -146,10 +147,7 @@ namespace Playdate
                     Label2.Text += "ERROR: Please enter 20 words or less for Bio. <br>";
                     return;
                 }
-
-
-                picID = Format(getEmail()) + "+" + Format(getPetName()) + ".jpg"; //TO BE OBTAINED FROM AUTHENTICATION
-                                                                                  //Format(EmailTextBox.Text) + "+" + Format(NameTextBox.Text) + ".jpg";
+                picID = Format(getEmail()) + "+" + Format(getPetName()) + ".jpg"; //TO BE OBTAINED FROM AUTHENTICATION      
                 UploadPic(picID);
 
                 Pet p = new Pet(
@@ -160,7 +158,8 @@ namespace Playdate
                 {
                     Label2.Text += "ERROR: Unable to create account. Please try again. <br>";
                     return;
-                } else
+                }
+                else
                 {
                     Label2.Text = "Account Profile Updated!";
                 }
@@ -213,7 +212,6 @@ namespace Playdate
         }
 
         /* Format -- formats all input text to capitalize only the first letter of input string 
-
          * postcondition: returns empty string if input is null or only whitespace
          */
         private static string Format(string s)
@@ -256,9 +254,20 @@ namespace Playdate
         {
             // if age, Animal Type, City, or State is null in table, then don't let them out >:)
 
-            
+
             try
             {
+                TableQuery<Pet> q = new TableQuery<Pet>().Where(TableQuery.GenerateFilterCondition("PartitionKey", QueryComparisons.Equal, (Format(getEmail()))));
+                var itemlist = tableClient.ExecuteQuery(q);
+                foreach (Pet p in itemlist)
+                {
+                    if (string.IsNullOrEmpty(p.City) || string.IsNullOrEmpty(p.State))
+                    {
+                        Label2.Text = "ERROR: You must save City and State fields";
+                        return;
+                    }
+                }
+                Label2.Text = "";
                 Server.Transfer("Main.aspx");
 
             }
@@ -275,52 +284,29 @@ namespace Playdate
          */
         private void Load_Profile(string email, string name)
         {
-            TableOperation retrieveOperation = TableOperation.Retrieve(Format(email), Format(name));
-            DynamicTableEntity pet = (DynamicTableEntity)tableClient.Execute(retrieveOperation).Result;
-            if (pet != null)
+            //TableOperation retrieveOperation = TableOperation.Retrieve(Format(email), Format(name));
+            //DynamicTableEntity pet = (DynamicTableEntity)tableClient.Execute(retrieveOperation).Result;
+            TableQuery<Pet> q = new TableQuery<Pet>().Where(TableQuery.GenerateFilterCondition("PartitionKey", QueryComparisons.Equal, (Format(getEmail())))); //
+            var itemlist = tableClient.ExecuteQuery(q);
+            foreach (Pet p in itemlist)
             {
-                for (int i = 0; i < pet.Properties.Count; i++)
-                {
-                    if (pet.Properties.ElementAt(i).Key == "Age")
-                    {
-                        AgeTextBox.Text = pet.Properties.ElementAt(i).Value.StringValue.Trim();
-                    }
-                    if (pet.Properties.ElementAt(i).Key == "Animal")
-                    {
-                        AnimalTextBox.Text = pet.Properties.ElementAt(i).Value.StringValue.Trim();
-                    }
-                    if (pet.Properties.ElementAt(i).Key == "City")
-                    {
-                        CityTextBox.Text = pet.Properties.ElementAt(i).Value.StringValue.Trim();
-                    }
-                    if (pet.Properties.ElementAt(i).Key == "State")
-                    {
-                        StateTextBox.Text = pet.Properties.ElementAt(i).Value.StringValue.Trim();
-                    }
-                    if (pet.Properties.ElementAt(i).Key == "Bio")
-                    {
-                        BioTextBox.Text = pet.Properties.ElementAt(i).Value.StringValue.Trim();
-                    }
-                    if (pet.Properties.ElementAt(i).Key == "PicID")
-                    {
-                        ProfilePic.Src = "https://playdate.blob.core.windows.net/profilepictures/" + email + "+" + name + ".jpg";
-
-                    }
-                }
+                AgeTextBox.Text = p.Age;
+                AnimalTextBox.Text = p.Animal;
+                CityTextBox.Text = p.City;
+                StateTextBox.Text = p.State;
+                BioTextBox.Text = p.Bio;
+                ProfilePic.Src = "https://playdate.blob.core.windows.net/profilepictures/" + p.PicID;
             }
         }
 
         /* reads in picture user uploaded from their file and upload to blob with their email+petname as key
          */
-        private void UploadPic(string picID)
+        private bool UploadPic(string picID)
         {
             if (PhotoUpload.HasFile)
             {
                 try
                 {
-
-
-
                     Stream photoStream = PhotoUpload.PostedFile.InputStream;
                     int photoLength = PhotoUpload.PostedFile.ContentLength;
                     string photoMime = PhotoUpload.PostedFile.ContentType;
@@ -337,15 +323,16 @@ namespace Playdate
                     BlobBlock.Properties.ContentType = "image/jpg";
                     var fileContent = photoData;
                     BlobBlock.UploadFromByteArray(fileContent, 0, fileContent.Length);
-
+                    return true;
                 }
                 catch (Exception ex)
                 {
                     Label2.Text = "ERROR: " + ex.Message;
                     Label2.Text += "<br>ERROR: Unable to upload profile picture. Please try again.";
-
+                    return false;
                 }
             }
+            return false;
         }
     }
 }

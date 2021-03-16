@@ -160,6 +160,7 @@ namespace Playdate
                 var entity = new TableEntity();
                 entity.PartitionKey = email;
                 entity.RowKey = name;
+                
                 batch.InsertOrReplace(entity); //stage insert
                 tableClient.ExecuteBatch(batch); //commit insert
             }
