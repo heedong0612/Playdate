@@ -84,6 +84,7 @@ namespace Playdate
                 string name = getPetName();
 
 
+
                 if (!string.IsNullOrWhiteSpace(name))
                 {
                     
@@ -259,6 +260,17 @@ namespace Playdate
             
             try
             {
+                TableQuery<Pet> q = new TableQuery<Pet>().Where(TableQuery.GenerateFilterCondition("PartitionKey", QueryComparisons.Equal, (Format(getEmail()))));
+                var itemlist = tableClient.ExecuteQuery(q);
+                foreach (Pet p in itemlist)
+                {
+                    if(string.IsNullOrEmpty(p.City) || string.IsNullOrEmpty(p.State))
+                    {
+                        Label2.Text = "ERROR: You have to fill out City and State fields";
+                        return;
+                    }
+                }
+                Label2.Text = "";
                 Server.Transfer("Main.aspx");
 
             }
@@ -275,39 +287,50 @@ namespace Playdate
          */
         private void Load_Profile(string email, string name)
         {
-            TableOperation retrieveOperation = TableOperation.Retrieve(Format(email), Format(name));
-            DynamicTableEntity pet = (DynamicTableEntity)tableClient.Execute(retrieveOperation).Result;
-            if (pet != null)
+            //TableOperation retrieveOperation = TableOperation.Retrieve(Format(email), Format(name));
+            //DynamicTableEntity pet = (DynamicTableEntity)tableClient.Execute(retrieveOperation).Result;
+            TableQuery<Pet> q = new TableQuery<Pet>().Where(TableQuery.GenerateFilterCondition("PartitionKey", QueryComparisons.Equal,(Format(getEmail())))); //
+            var itemlist = tableClient.ExecuteQuery(q);
+            foreach (Pet p in itemlist)
             {
-                for (int i = 0; i < pet.Properties.Count; i++)
-                {
-                    if (pet.Properties.ElementAt(i).Key == "Age")
-                    {
-                        AgeTextBox.Text = pet.Properties.ElementAt(i).Value.StringValue.Trim();
-                    }
-                    if (pet.Properties.ElementAt(i).Key == "Animal")
-                    {
-                        AnimalTextBox.Text = pet.Properties.ElementAt(i).Value.StringValue.Trim();
-                    }
-                    if (pet.Properties.ElementAt(i).Key == "City")
-                    {
-                        CityTextBox.Text = pet.Properties.ElementAt(i).Value.StringValue.Trim();
-                    }
-                    if (pet.Properties.ElementAt(i).Key == "State")
-                    {
-                        StateTextBox.Text = pet.Properties.ElementAt(i).Value.StringValue.Trim();
-                    }
-                    if (pet.Properties.ElementAt(i).Key == "Bio")
-                    {
-                        BioTextBox.Text = pet.Properties.ElementAt(i).Value.StringValue.Trim();
-                    }
-                    if (pet.Properties.ElementAt(i).Key == "PicID")
-                    {
-                        ProfilePic.Src = "https://playdate.blob.core.windows.net/profilepictures/" + email + "+" + name + ".jpg";
-
-                    }
-                }
+                AgeTextBox.Text = p.Age;
+                AnimalTextBox.Text = p.Animal;
+                CityTextBox.Text = p.City;
+                StateTextBox.Text = p.State;
+                BioTextBox.Text = p.Bio;
+                ProfilePic.Src = "https://playdate.blob.core.windows.net/profilepictures/" + p.PicID;
             }
+            //if (pet != null)
+            //{
+            //    for (int i = 0; i < pet.Properties.Count; i++)
+            //    {
+            //        if (pet.Properties.ElementAt(i).Key == "Age")
+            //        {
+            //            AgeTextBox.Text = pet.Properties.ElementAt(i).Value.StringValue.Trim();
+            //        }
+            //        if (pet.Properties.ElementAt(i).Key == "Animal")
+            //        {
+            //            AnimalTextBox.Text = pet.Properties.ElementAt(i).Value.StringValue.Trim();
+            //        }
+            //        if (pet.Properties.ElementAt(i).Key == "City")
+            //        {
+            //            CityTextBox.Text = pet.Properties.ElementAt(i).Value.StringValue.Trim();
+            //        }
+            //        if (pet.Properties.ElementAt(i).Key == "State")
+            //        {
+            //            StateTextBox.Text = pet.Properties.ElementAt(i).Value.StringValue.Trim();
+            //        }
+            //        if (pet.Properties.ElementAt(i).Key == "Bio")
+            //        {
+            //            BioTextBox.Text = pet.Properties.ElementAt(i).Value.StringValue.Trim();
+            //        }
+            //        if (pet.Properties.ElementAt(i).Key == "PicID")
+            //        {
+            //            ProfilePic.Src = "https://playdate.blob.core.windows.net/profilepictures/" + email + "+" + name + ".jpg";
+
+            //        }
+            //    }
+            //}
         }
 
         /* reads in picture user uploaded from their file and upload to blob with their email+petname as key
